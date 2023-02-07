@@ -30,7 +30,7 @@
             @yield('content')
         </div>
     </main>
-    {{-- <script src="{{ asset('storage/js/jquery-3.6.0.min.js') }}">
+    <script src="{{ asset('storage/js/jquery-3.6.0.min.js') }}">
     <script src="{{ asset('storage/js/jquery-ui.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('storage/css/jquery-ui.css') }}"> --}}
     {{-- <script type="text/javascript">
