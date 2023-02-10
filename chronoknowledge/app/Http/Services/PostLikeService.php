@@ -9,10 +9,20 @@ use App\Components\ResponseComponent;
 class PostLikeService
 {
     private $response;
+    private $postLike;
 
     public function __construct(ResponseComponent $response)
     {
         $this->response = $response;
+        $this->postLike = app(PostLike::class);
+    }
+
+    public function index() {
+        return $this->postLike->postLikesList();
+    }
+
+    public function getLikesByYear() {
+        return $this->postLike->likesByYearList();
     }
 
     public function create($request)

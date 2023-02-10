@@ -13,7 +13,7 @@
                             @endif
                         </div>
                         <div class="container mb-5 mt-2">
-                            <a class="btn btn-lg btn-block btn-primary" style="background-color: #dd4b39;" href="{{ route('login.google') }}">
+                            <a class="btn btn-lg btn-block btn-primary" style="background-color: #dd4b39;" href="{{ route('auth.google') }}?method=login">
                                 <i class="fab fa-google me-2"></i> Sign in with google</a>
                         </div>
                         <div class="container mt-4 mb-2">

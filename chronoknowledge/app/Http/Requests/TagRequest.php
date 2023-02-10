@@ -26,8 +26,7 @@ class TagRequest extends FormRequest
     {
         return [
             'title' => ['bail', 'required', 'string', 'max:100', 'alpha_dash'],
-            'plain_description' => ['bail', 'required', 'string'],
-            'html_description' => ['bail', 'required', 'string']
+            'description' => ['bail', 'required'],
         ];
     }
 }

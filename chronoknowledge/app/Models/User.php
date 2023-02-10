@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Enums\UserRole;
 use App\Enums\UserGender;
+use App\Enums\UserJobTitle;
 use Throwable;
 use Carbon\Carbon;
 
@@ -22,7 +23,6 @@ class User extends Authenticatable
     use HasApiTokens;
     use HasFactory;
     use Notifiable;
-    // use MustVerifyEmail;
     use SoftDeletes;
 
     /**
@@ -42,7 +42,8 @@ class User extends Authenticatable
         'zip_code',
         'address',
         'tel',
-        'profile'
+        'profile',
+        'job_title'
     ];
 
     /**
@@ -76,7 +77,6 @@ class User extends Authenticatable
                 'name' => $this->setName($data['first_name'], $data['middle_name'], $data['last_name']),
                 'nick_name' => $data['nick_name'],
                 'birth_date' => Carbon::createFromFormat('Y-m-d', $this->formatDate($data['date_of_birth'])),
-                'birth_date' => now(),
                 'gender' => UserGender::GENDERS[$data['gender']],
                 'zip_code' => $data['zip_code'],
                 'address' => $data['address'],
@@ -86,6 +86,31 @@ class User extends Authenticatable
             return true;
         } catch (Throwable $e) {
             return false;
+        }
+    }
+
+    public function registerUserViaGoogle($data)
+    {
+        try {
+            $user = $this->create([
+                'role_id' => UserRole::USER,
+                'email' => $data->email,
+                'username' => strtolower(explode($data->name, ' ')[0]) . '123',
+                'password' => Hash::make('password'),
+                'name' => $data->name,
+                'nick_name' => $data->nick_name,
+                'birth_date' => null,
+                'gender' => UserGender::EMPTY,
+                'zip_code' => 'default',
+                'address' => 'default',
+                'tel' => '00000000000',
+                'job_title' => UserJobTitle::TITLES[1],
+                'picture' => $data->picture,
+            ]);
+
+            return true;
+        } catch (Throwable $e) {
+            return $e;
         }
     }
 

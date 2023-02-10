@@ -5,10 +5,10 @@
     <div class="container">
         <div class="row">
             @foreach ($tags as $tag)
-            <div class="col col-sm-1 col-lg-1">
-                <div class="card border px-3 py-1" style="width:fit-content">
+            <div class="col">
+                <div class="card border px-1 py-1" style="width:fit-content">
                     <a href="{{ route('admin.tags.edit', $tag->id) }}" class="text-secondary">
-                        {{ $tag->plain_description }}
+                        {!! $tag->html_description !!}
                     </a>
                 </div>
             </div>

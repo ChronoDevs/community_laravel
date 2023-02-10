@@ -35,13 +35,23 @@
                                 @error('title')
                                     <span class="text text-danger mb-1">{{ $message }}</span>
                                 @enderror
+                                <label class="form-label float-left" for="title">Description</label><br>
                                 <div class="form-outline mb-1">
+
+                                    <textarea class="description" name="description" onkeyup="console.log(this)">
+                                    {!! !old('description') ? $post->html_description : old('description') !!}
+                                </textarea>
+                                </div>
+                                @error('description')
+                                    <span class="text text-danger mb-1">{{ $message }}</span>
+                                @enderror
+                                {{-- <div class="form-outline mb-1">
                                     <label class="form-label float-left" for="plainDescription">Plain Description</label>
                                     <input type="text" id="plainDescription" class="form-control form-control-lg"
                                         value="{{ !old('plain_description') ? $post->plain_description : old('plain_description') }}"
                                         name="plain_description" placeholder="Middle Name" />
-                                </div>
-                                @error('plain_description')
+                                </div> --}}
+                                {{-- @error('plain_description')
                                     <span class="text text-danger mb-1">{{ $message }}</span>
                                 @enderror
                                 <div class="form-outline mb-1">
@@ -52,7 +62,7 @@
                                 </div>
                                 @error('html_description')
                                     <span class="text text-danger mb-1">{{ $message }}</span>
-                                @enderror
+                                @enderror --}}
                                 <div class="form-outline mb-1 mt-2">
                                     <label class="form-label float-left" for="gender">Tags</label>
                                     <textarea name='tag' class='textarea countries form-control form-control-lg' placeholder="Try to add tags from the list">{{ old('tag') }}</textarea>

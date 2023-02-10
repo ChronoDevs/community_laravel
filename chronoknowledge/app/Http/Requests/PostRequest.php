@@ -30,8 +30,8 @@ class PostRequest extends FormRequest
             'user_id' => ['bail', 'required', 'integer'],
             'category' => ['bail', 'required', 'string'],
             'title' => ['bail', 'required', 'string', 'max:100'],
-            'plain_description' => ['bail', 'required', 'string'],
-            'html_description' => ['bail', 'required', 'string'],
+            'description' => ['bail', 'required'],
+            // 'html_description' => ['bail', 'required', 'string'],
             'tag' => ['bail', 'required', 'string']
         ];
     }

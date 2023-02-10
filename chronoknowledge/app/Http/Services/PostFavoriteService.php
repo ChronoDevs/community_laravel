@@ -10,10 +10,12 @@ use App\Components\ResponseComponent;
 class PostFavoriteService implements PostFavoriteInterface
 {
     private $response;
+    private $postFavorite;
 
     public function __construct(ResponseComponent $response)
     {
         $this->response = $response;
+        $this->postFavorite = app(PostFavorite::class);
     }
 
     public function index()
@@ -21,6 +23,14 @@ class PostFavoriteService implements PostFavoriteInterface
         $favorites = PostFavorite::all();
 
         return $favorites;
+    }
+
+    /**
+     * Returns list of favorites with years and months
+     */
+    public function getFavoritesByYear()
+    {
+        return $this->postFavorite->getFavoritesByYearList();
     }
 
     public function create($request)

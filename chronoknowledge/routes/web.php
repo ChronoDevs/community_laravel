@@ -32,7 +32,7 @@ Route::group(['middleware' => 'guest'], function () {
     Route::post('/send-email', [PasswordResetController::class, 'send'])->name('password.email');
     Route::get('/reset-password/{token}', [PasswordResetController::class, 'sendResetLink'])->name('password.reset');
     Route::post('/reset-password', [PasswordResetController::class, 'update'])->name('password.update');
-    Route::get('/google-login', [LoginController::class, 'redirectToGoogle'])->name('login.google');
+    Route::get('/google-login', [LoginController::class, 'redirectToGoogle'])->name('auth.google');
     Route::get('/auth/google/callback', [LoginController::class, 'loginWithGoogle'])->name('login.google-callback');
     // Route::get('/google-login', [LoginController::class, 'loginWithGoogle'])->name('login.google');
 

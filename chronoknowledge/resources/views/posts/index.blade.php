@@ -55,11 +55,11 @@
                         <h5 class="card-title">
                             {{ $post->title }}
                         </h5>
-                        <p class="card-text">
+                        {{-- <p class="card-text">
                             {{ $post->plain_description }}
-                        </p>
+                        </p> --}}
                         <p class="card-text">
-                            {{ $post->html_description }}
+                            {!! $post->html_description !!}
                         </p>
                         <div class="row">
                             @foreach ($post->tags as $tag)

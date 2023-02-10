@@ -8,12 +8,12 @@
                         <h3>Chronostep Community </h3>
                         <h6>Welcome to the amazing community of engineers in Chronostep Inc.</h6>
 
-                        <button class="btn btn-lg btn-block btn-primary w-100 mt-2 mb-2" style="background-color: #dd4b39;"
+                        <a href="{{ route('auth.google') }}?method=register" class="btn btn-lg btn-block btn-primary w-100 mt-2 mb-2" style="background-color: #dd4b39;"
                             type="submit">
-                            <i class="fab fa-google me-2"></i> Sign in with google</button>
-                        <button class="btn btn-lg btn-block btn-primary mb-2 w-100 mt-2 mb-2"
-                            style="background-color: #3b5998;" type="submit"><i class="fab fa-facebook-f me-2"></i>Sign in
-                            with facebook</button>
+                            <i class="fab fa-google me-2"></i> Continue with google</a>
+                        <a href="#" class="btn btn-lg btn-block btn-primary mb-2 w-100 mt-2 mb-2"
+                            style="background-color: #3b5998;" type="submit"><i class="fab fa-facebook-f me-2"></i>Continue
+                            with facebook</a>
                         <div class="container-fluid mt-4 mb-3">
                             <div class="mb-2"> Already have an account? &nbsp;&nbsp;
                                 <a href="{{ route('login') }}">Log in.</a>
@@ -70,7 +70,8 @@
                             <div class="row">
                                 <div class="col-md-6 mb-1 pb-2">
                                     <label class="form-label float-left" for="gender">Gender</label>
-                                    <select class="select form-control form-control-lg" value="{{ old('gender') }}" name="gender">
+                                    <select class="select form-control form-control-lg" value="{{ old('gender') }}"
+                                        name="gender">
                                         <option value="" selected>Select Gender</option>
                                         <option value="1">Female</option>
                                         <option value="2">Male</option>
@@ -108,8 +109,7 @@
                                     <div class="form-outline">
                                         <label class="form-label float-left" for="zipCode">Zip Code</label>
                                         <input type="tel" id="zipCode" class="form-control form-control-lg"
-                                            value="{{ old('zip_code') }}" name="zip_code"
-                                            placeholder="Zip Code" />
+                                            value="{{ old('zip_code') }}" name="zip_code" placeholder="Zip Code" />
                                         @error('zip_code')
                                             <span class="text text-danger mb-1">{{ $message }}</span>
                                         @enderror
@@ -118,38 +118,42 @@
                             </div>
                             <div class="form-outline mb-1">
                                 <label class="form-label" for="address" style="float:left">Address</label>
-                                <input type="address" id="address" class="form-control form-control-lg" value="{{ old('address') }}" name="address"
-                                    placeholder="Address" />
+                                <input type="address" id="address" class="form-control form-control-lg"
+                                    value="{{ old('address') }}" name="address" placeholder="Address" />
                             </div>
                             @error('address')
                                 <span class="text text-danger mb-1">{{ $message }}</span>
                             @enderror
                             <div class="form-outline mb-1">
                                 <label class="form-label" for="typeEmailX-2" style="float:left">Email</label>
-                                <input type="email" id="typeEmailX-2" class="form-control form-control-lg" value="{{ old('email') }}"
-                                    name="email" placeholder="Email" />
+                                <input type="email" id="typeEmailX-2" class="form-control form-control-lg"
+                                    value="{{ old('email') }}" name="email" placeholder="Email" />
                             </div>
                             @error('email')
                                 <span class="text text-danger mb-1">{{ $message }}</span>
                             @enderror
                             <div class="form-outline mb-1">
                                 <label class="form-label" for="typePasswordX-2" style="float:left">Password</label>
-                                <input type="password" id="typePasswordX-2" class="form-control form-control-lg" value="{{ old('password') }}"
-                                    name="password" placeholder="Password" />
+                                <input type="password" id="typePasswordX-2" class="form-control form-control-lg"
+                                    value="{{ old('password') }}" name="password" placeholder="Password" />
                             </div>
                             @error('password')
                                 <span class="text text-danger mb-1">{{ $message }}</span>
                             @enderror
                             <div class="form-outline mb-4">
-                                <label class="form-label" for="typePasswordX-2" style="float:left">Confirm Password</label>
-                                <input type="password" id="typePasswordX-2" class="form-control form-control-lg" name="password_confirmation" value="{{ old('password_confirmation')}}" placeholder="Confirm Password"/>
+                                <label class="form-label" for="typePasswordX-2" style="float:left">Confirm
+                                    Password</label>
+                                <input type="password" id="typePasswordX-2" class="form-control form-control-lg"
+                                    name="password_confirmation" value="{{ old('password_confirmation') }}"
+                                    placeholder="Confirm Password" />
                             </div>
                             @error('password_confirmation')
                                 <span class="text text-danger mb-2">{{ $message }}</span>
                             @enderror
                             <div class="form-outline mb-1">
                                 <label class="form-label" for="profile" style="float:left">Profile</label>
-                                <input type="file" id="profile" class="form-control form-control-lg" name="profile" value="{{ old('profile')}}" placeholder="Profile"/>
+                                <input type="file" id="profile" class="form-control form-control-lg" name="profile"
+                                    value="{{ old('profile') }}" placeholder="Profile" />
                             </div>
                             @error('profile')
                                 <span class="text text-danger mb-4">{{ $message }}</span>
@@ -170,5 +174,61 @@
                 dateFormat: "mm-dd-yy"
             });
         })
+
+
+        // @if ($errors->any() && !error('profile_picture'))
+
+
+        //     if (localStorage.getItem('file')) {
+        //         let filename = localStorage.getItem('file_name')
+        //         let file = dataURLtoFile(localStorage.getItem('file'), filename)
+        //         let list = new DataTransfer();
+
+        //         list.items.add(file);
+        //         $('#photo')[0].files = list.files
+        //         $('#eventPhoto').attr('src', window.URL.createObjectURL(file))
+        //         $('#deleteImageButton').show();
+        //     }
+        // @endif
+
+
+        // function dataURLtoFile(dataurl, filename) {
+
+
+        //     let arr = dataurl.split(','),
+        //         mime = arr[0].match(/:(.*?);/)[0],
+        //         bstr = atob(arr[1]),
+        //         n = bstr.length,
+        //         u8arr = new Uint8Array(n);
+
+
+        //     while (n--) {
+        //         u8arr[n] = bstr.charCodeAt(n);
+        //     }
+
+
+        //     return new File([u8arr], filename, {
+        //         type: mime
+        //     });
+        // }
+        // if (imageFile) {
+        //     reader.addEventListener('load', function() {
+        //         eventPhoto.src = window.URL.createObjectURL(imageFile)
+        //         localStorage.setItem('file', reader.result);
+
+        //         localStorage.setItem('file_name', imageFile.name)
+        //     });
+
+        //     reader.readAsDataURL(imageFile);
+        //     $('#deleteImageButton').show();
+        // } else {
+        //     @if (!empty($event['img_path']))
+        //         document.getElementById('eventPhoto').src = '{{ $event['img_path'] }}';
+        //     @else
+        //         document.getElementById('eventPhoto').src =
+        //             '{{ asset('images/upload-image.png') }}';
+        //         $('#deleteImageButton').hide();
+        //     @endif
+        // }
     </script>
 @endsection

@@ -20,8 +20,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/4.0.17/css/froala_editor.min.css"
         integrity="sha512-MQMcuu7nbtekrEV/+KXG3INNq4CYNkmbnO1UcdvhE8+VYIdf0Jf1xAcvuG77xxpzIPpyvHL/ws0yBW7D49xFrA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="{{ asset('storage/css/summernote-bs5.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />>
+    <link rel="stylesheet" href="{{ asset('storage/css/trumbowyg.min.css') }}">
 </head>
 </head>
 
@@ -51,6 +51,7 @@
 
     <!--
         Elastic Search
+        https://www.codesolutionstuff.com/laravel-9-elasticsearch-integration-from-scratch-with-example/
         https://madewithlove.com/blog/software-engineering/how-to-integrate-elasticsearch-in-your-laravel-app-2022/
     -->
     <script src="{{ asset('storage/js/jquery-3.6.3.min.js') }}"></script>
@@ -59,23 +60,34 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
     {{-- <script src="{{ asset('storage/js/jquery-ui.js') }}"></script> --}}
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-    {{-- <script src="{{ asset('storage/js/froala_editor.min.js') }}"></script> --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/4.0.17/js/froala_editor.min.js"
-        integrity="sha512-ccmoHLSr8C18DugVUXvUYUysen8GpqNYRCI/4zO9Ol39cT/VwLjfK21MC6tAMcEL4LMVi5OwzvXlpneQN2QfGg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
+    {{-- <script src="{{ asset('storage/js/froala_editor.min.js') }}"></script> --}}
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/4.0.17/js/froala_editor.min.js"
+        integrity="sha512-ccmoHLSr8C18DugVUXvUYUysen8GpqNYRCI/4zO9Ol39cT/VwLjfK21MC6tAMcEL4LMVi5OwzvXlpneQN2QfGg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js"></script>
     <script src="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.js"></script>
 
     <!-- https://yaireo.github.io/tagify/ -->
     <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
     <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
-    <script src="{{ asset('storage/js/summernote-bs5.js') }}"></script>
-    <script src="{{ asset('storage/js/lang/summernote-en-US.js') }}"></script>
-    <script type="text/javascript" src="https://unpkg.com/default-passive-events"></script>
+
+    <!-- https://alex-d.github.io/Trumbowyg/documentation/ -->
+    <script src="{{ asset('storage/js/trumbowyg.min.js') }}"></script>
+
+    <!-- https://www.chartjs.org/docs/ -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.0/chart.min.js"
+        integrity="sha512-qKyIokLnyh6oSnWsc5h21uwMAQtljqMZZT17CIMXuCQNIfFSFF4tJdMOaJHL9fQdJUANid6OB6DRR0zdHrbWAw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <script type="text/javascript">
+        $(function() {
+            $.trumbowyg.svgPath = '{{ asset('storage/assets/icons.svg') }}';
+            $('.description').trumbowyg();
+        })
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('#tokenId').attr('content')
@@ -83,12 +95,6 @@
         });
     </script>
     <script type="text/javascript" src="{{ asset('storage/js/app.js') }}"></script>
-    {{-- <script>
-        //prevent form to submit on page reload
-        if (window.history.replaceState) {
-            window.history.replaceState(null, null, window.location.href);
-        }
-    </script> --}}
     @stack('scripts')
 </body>
 

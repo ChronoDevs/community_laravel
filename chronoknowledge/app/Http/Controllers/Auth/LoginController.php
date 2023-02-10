@@ -14,9 +14,12 @@ use App\Models\User;
 
 class LoginController extends Controller
 {
+    private $user;
+
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+        $this->user = app(User::class);
     }
     public function index()
     {
@@ -59,9 +62,22 @@ class LoginController extends Controller
     public function loginWithGoogle(Request $request)
     {
         try {
+            $method = session('method');
             $googleUser = Socialite::driver('google')->stateless()->user();
 
             $user = User::where('email', $googleUser->email)->first();
+
+            if (!$user) {
+                if ($method == 'register') {
+                  $user = $this->user->registerUserViaGoogle($googleUser);
+
+                    if ($user) {
+                        return redirect()->route('login.index')->with('success', trans('messages.register.success'));
+                    }
+                } else {
+                    return back()->with('error', trans('auth.failed'));
+                }
+            }
 
             $socialAccount = LinkedSocialAccount::updateOrCreate([
                 'user_id' => $user->id,
@@ -80,8 +96,10 @@ class LoginController extends Controller
         }
     }
 
-    public function redirectToGoogle()
+    public function redirectToGoogle(Request $request)
     {
+        session()->put('method', $request->method);
+
         return Socialite::driver('google')->redirect();
     }
 }

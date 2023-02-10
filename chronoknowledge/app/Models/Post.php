@@ -12,6 +12,8 @@ use App\Models\PostComment;
 use App\Models\PostFavorite;
 use App\Models\PostTag;
 use App\Enums\PostStatus;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class Post extends Model
 {
@@ -95,10 +97,9 @@ class Post extends Model
      */
     public function scopePostList($query)
     {
-        return $query->with(['user',
-        'likes', 'comments', 'favorites'])
-            ->latest()
-            ->paginate(10);
+        return $query->with(['user','likes', 'comments', 'favorites'])
+            ->latest();
+            // ->paginate(10);
     }
 
     /**
@@ -106,11 +107,11 @@ class Post extends Model
      */
     public function scopePostActiveList($query)
     {
-        return $query->with(['user',
-        'likes', 'comments', 'favorites'])
+        return $query->with(['user', 'likes', 'comments', 'favorites'])
             ->where('status', PostStatus::ACTIVE)
-            ->latest()
-            ->paginate(10);
+            ->latest();
+            // ->get();
+    //         ->paginate(10);
     }
 
     /**
@@ -118,10 +119,41 @@ class Post extends Model
      */
     public function scopePostInactiveList($query)
     {
-        return $query->with(['user',
-        'likes', 'comments', 'favorites'])
+        return $query->with(['user', 'likes', 'comments', 'favorites'])
             ->where('status', PostStatus::INACTIVE)
             ->latest()
             ->paginate(10);
+    }
+
+    /**
+     * List all posts by months
+     */
+    public function scopePostByMonthList($query, $year)
+    {
+        DB::statement("SET SQL_MODE=''");
+        return $query->with(['user', 'likes', 'comments', 'favorites'])
+            // ->where('status', PostStatus::ACTIVE)
+            ->whereYear('created_at', $year)
+            ->select('posts.*', DB::raw('DAY(created_at) as day, MONTH(posts.created_at) as month'))
+            // ->whereYear('created_at', $year)
+            ->orderBy('month', 'asc')
+            ->orderBy('day' , 'desc')
+            // ->groupBy('month', 'day')
+            // ->groupBy('posts.created_at')
+            // ->latest()
+            ->get();
+    }
+
+    /**
+     * List all posts by year
+     */
+    public function scopePostByYearList($query, $year)
+    {
+        return $query->with(['user', 'likes', 'comments', 'favorites'])
+            // ->where('status', PostStatus::INACTIVE)
+            ->select('posts.*', 'posts.id as postId', DB::raw('YEAR(posts.created_at) as year, MONTH(posts.created_at) as month'))
+            // ->whereYear('created_at', $year)
+            ->orderBy('year', 'desc')
+            ->get();
     }
 }

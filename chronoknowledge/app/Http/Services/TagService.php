@@ -59,8 +59,10 @@ class TagService implements TagInterface
     {
         try {
             DB::transaction(function () use ($request) {
-                $this->tag->create([
-                    ...$request
+                $this->tag->updateOrCreate([
+                    'title' => $request['title'],
+                    'plain_description' => strip_tags($request['description']),
+                    'html_description' => $request['description']
                 ]);
             });
 
@@ -74,8 +76,10 @@ class TagService implements TagInterface
     {
         try {
             DB::transaction(function () use ($request, &$tag) {
-                $tag->update([
-                    ...$request
+                $tag->updateOrCreate([
+                    'title' => $request['title'],
+                    'plain_description' => strip_tags($request['description']),
+                    'html_description' => $request['description']
                 ]);
             });
 

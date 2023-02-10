@@ -4,10 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
+use Laravel\Socialite\Facades\Socialite;
+use App\Models\LinkedSocialAccount;
 use App\Models\User;
 
 class UserController extends Controller
 {
+    private $user;
+
+    public function __construct()
+    {
+        $this->user = app(User::class);
+    }
+
     public function index ()
     {
         return view('auth.register');
@@ -23,7 +32,7 @@ class UserController extends Controller
     public function register (UserRequest $request)
     {
         $data = $request->validated();
-        $register = app(User::class)->registerUser($data);
+        $register = $this->user->registerUser($data);
 
         if ($register) {
             return redirect()->route('login.index')->with('success', trans('messages.register.success'));

@@ -42,4 +42,18 @@ class PostFavorite extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * List all favorites by year
+     */
+    public function scopeFavoritesByYearList($query, $year)
+    {
+        return $query->with(['user', 'post'])
+            // ->where('status', PostStatus::INACTIVE)
+            ->select('favorites.*', DB::raw('YEAR(posts.created_at) as year, MONTH(posts.created_at) as month'))
+            // ->whereYear('created_at', $year)
+            ->orderBy('year', 'desc')
+            ->orderBy('month', 'desc')
+            ->get();
+    }
 }

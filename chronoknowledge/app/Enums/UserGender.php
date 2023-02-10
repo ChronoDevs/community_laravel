@@ -7,7 +7,7 @@ namespace App\Enums;
  */
 final class UserGender
 {
-    const EMPTY = '';
+    const EMPTY = 0;
     const FEMALE = 1;
     const MALE = 2;
     const OTHER = 3;

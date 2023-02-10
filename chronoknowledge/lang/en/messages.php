@@ -23,7 +23,7 @@ return [
     ],
     'login' => [
         'success' => 'Successfully logged in!',
-        'error' => 'Incorrect email or password!'
+        'error' => 'Incorrect email or password!',
     ],
     'register' => [
         'success' => 'Successfully registered your account!',

@@ -40,6 +40,21 @@ class PostService
         return $posts;
     }
 
+    public function getPostByYear($year)
+    {
+        return $this->post->postByYearList($year);
+    }
+
+    public function getPostByMonth($year)
+    {
+        return $this->post->postByMonthList($year);
+    }
+
+    public function admin()
+    {
+        return $this->post->postList();
+    }
+
     public function create($request, $user)
     {
         try {
@@ -47,8 +62,8 @@ class PostService
                 'user_id' => $request['user_id'],
                 'category_id' => $request['category'],
                 'title' => $request['title'],
-                'plain_description' => $request['plain_description'],
-                'html_description' => $request['html_description'],
+                'plain_description' => strip_tags($request['description']),
+                'html_description' => $request['description'],
                 'status' => PostStatus::ACTIVE
             ]);
             $postTag = $this->postTag->savePostTag($request, $post->id);
@@ -68,8 +83,8 @@ class PostService
             $post->update([
                 'category_id' => $request['category'],
                 'title' => $request['title'],
-                'plain_description' => $request['plain_description'],
-                'html_description' => $request['html_description'],
+                'plain_description' => strip_tags($request['description']),
+                'html_description' => $request['description'],
                 'status' => PostStatus::ACTIVE
             ]);
 

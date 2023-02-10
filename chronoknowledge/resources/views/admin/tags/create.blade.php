@@ -16,22 +16,14 @@
                             @error('title')
                                 <span class="text text-danger mb-1">{{ $message }}</span>
                             @enderror
+                            <label class="form-label float-left" for="title">Description</label><br>
                             <div class="form-outline mb-1">
-                                <label class="form-label float-left" for="plainDescription">Plain Description</label>
-                                <input type="text" id="plainDescription" class="form-control form-control-lg"
-                                    value="{{ old('plain_description') }}" name="plain_description"
-                                    placeholder="Plain Description" />
+
+                                <textarea class="description" name="description" onkeyup="console.log(this)">
+                                    {!! old('description') !!}
+                                </textarea>
                             </div>
-                            @error('plain_description')
-                                <span class="text text-danger mb-1">{{ $message }}</span>
-                            @enderror
-                            <div class="form-outline mb-1">
-                                <label class="form-label float-left" for="htmlDescription">HTML Description</label>
-                                <input type="text" id="htmlDescription" class="form-control form-control-lg"
-                                    value="{{ old('html_description') }}" name="html_description"
-                                    placeholder="HTML Description" />
-                            </div>
-                            @error('html_description')
+                            @error('description')
                                 <span class="text text-danger mb-1">{{ $message }}</span>
                             @enderror
                             <button class="btn btn-primary btn-lg w-100 mt-4" type="submit">Create</button>

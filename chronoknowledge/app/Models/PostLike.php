@@ -52,4 +52,26 @@ class PostLike extends Model
     {
         return $this->belongsTo(Post::class);
     }
+
+    /**
+     * Scope function to return likes
+     */
+    public function scopePostLikesList($query)
+    {
+        return $query;
+    }
+
+     /**
+     * List all likes by year
+     */
+    public function scopeLikesByYearList($query, $year)
+    {
+        return $query->with(['user', 'likes', 'comments', 'favorites'])
+            // ->where('status', PostStatus::INACTIVE)
+            ->select('likes.*', DB::raw('YEAR(posts.created_at) as year, MONTH(posts.created_at) as month'))
+            // ->whereYear('created_at', $year)
+            ->orderBy('year', 'desc')
+            ->orderBy('month', 'desc')
+            ->get();
+    }
 }

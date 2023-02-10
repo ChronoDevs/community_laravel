@@ -31,55 +31,20 @@
                             @error('title')
                                 <span class="text text-danger mb-1">{{ $message }}</span>
                             @enderror
+                            <label class="form-label float-left" for="title">Description</label><br>
                             <div class="form-outline mb-1">
-                                <label class="form-label float-left" for="plainDescription">Plain Description</label>
-                                <textarea type="text" id="plainDescription" class="textarea form-control form-control-lg" value=""
-                                    name="plain_description" placeholder="Plain description">{{ old('plain_description') }}</textarea>
+
+                                <textarea class="description" name="description" onkeyup="console.log(this)">
+                                    {!! old('description') !!}
+                                </textarea>
                             </div>
-                            @error('plain_description')
+                            @error('description')
                                 <span class="text text-danger mb-1">{{ $message }}</span>
                             @enderror
-                            <div class="form-outline mb-1">
-                                <label class="form-label float-left" for="htmlDescription">HTML Description</label>
-                                <textarea type="text" id="htmlDescription" class="textarea form-control form-control-lg" value=""
-                                    name="html_description" placeholder="HTML Description">{{ old('html_description') }}</textarea>
-                            </div>
-                            @error('html_description')
-                                <span class="text text-danger mb-1">{{ $message }}</span>
-                            @enderror
-                            {{-- <div class="form-outline mb-1 ui-widget">
-                                <!-- Multiple Select -->
-                                <label class="form-label float-left" for="gender">Tags</label>
-                                <input id="tags" class="form-control form-control-lg" name="tag"
-                                    value="{{ old('tag') }}" placeholder="Tag"> --}}
-                            {{-- <select id="tags" class="w-100 mt-2 justify-content-center form-control form-control-lg px-1 py-2 text-justify-center" multiple="multiple">
-                                    <option value="1">January</option>
-                                </select> --}}
-
-                            {{-- </div>
-                            @error('tag')
-                                <span class="text text-danger mb-2">{{ $message }}</span>
-                            @enderror --}}
-                            {{-- @if ($errors->any())
-                                <span class="text-danger"> {{ $errors}}</span>
-
-                            @endif --}}
-                            {{-- <section id="editor">
-                                2
-                                <div id="edit">
-                                    3
-                                    Your editable content goes here
-                                    4
-                                </div>
-                                5
-                            </section> --}}
                             <div class="form-outline mb-1 mt-2">
                                 <label class="form-label float-left" for="gender">Tags</label>
                                 <textarea name='tag' class='textarea countries form-control form-control-lg'
                                     placeholder="Try to add tags from the list">{{ old('tag') }}</textarea>
-                            </div>
-                            <div class="summernote">
-                                <p>jQueryScript.Net</p>
                             </div>
                             <button class="btn btn-primary btn-lg w-100 mt-4" type="submit">Continue</button>
                         </form>
@@ -108,9 +73,9 @@
 
                 dropdownItem: function(tagData) {
                     try {
-                        return `<div ${this.getAttributes(tagData)} class='tagify__dropdown__item ${tagData.class ? tagData.class : ""}' >
+                        return `<div ${this.getAttributes(tagData)} class='tagify__dropdown__item border${tagData.class ? tagData.class : ""}' >
                             <span>${tagData.value}</span><br>
-                            <div class='tagify__tag-text'>${tagData.description}</div>
+                            <div class='tagify__tag-text'> ${tagData.description} </div>
                         </div>`
                     } catch (err) {
                         console.error(err)
@@ -155,30 +120,5 @@
         // add the first 2 tags and makes them readonly
         // var tagsToAdd = tagify.whitelist.slice(0, 2)
         // tagify.addTags(tagsToAdd)
-
-        $(function() {
-            $('.summernote').summernote({
-                // mentions: ['jayden', 'sam', 'alvin', 'david'],
-                // match: /\B@(\w*)$/,
-                // search: function(keyword, callback) {
-                //     callback($.grep(this.mentions, function(item) {
-                //         return item.indexOf(keyword) == 0;
-                //     }));
-                // },
-                // content: function(item) {
-                //     return '@' + item;
-                // }
-                toolbar: [
-                    ['style', ['style']],
-                    ['font', ['bold', 'underline', 'clear']],
-                    ['fontname', ['fontname']],
-                    ['color', ['color']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['table', ['table']],
-                    ['insert', ['link']],
-                    ['view', ['fullscreen', 'codeview', 'help']],
-                ],
-            });
-        })
     </script>
 @endpush
