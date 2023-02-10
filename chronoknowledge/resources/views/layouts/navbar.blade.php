@@ -41,12 +41,14 @@
             <!-- Navbar brand -->
             <a class="navbar-brand mt-2 mt-lg-0" href="#">
                 <img id="companyLogo" src="{{ asset('storage/assets/chronostep_logo.png') }}" alt="Chronostep Logo"
-                    loading="lazy" />
+                    loading="lazy" class="img-fluid me-5"/>
             </a>
             <!-- Search form -->
-            <form class="input-group w-auto my-auto d-none d-sm-flex ms-5">
-                <input autocomplete="off" type="search" class="form-control form-control-lg rounded me-4"
-                    placeholder="Search" style="width: 20vw;" name="search" value="{{ old('search') }}" />
+            <form action="{{ route('posts.search') }}" class="input-group w-auto my-auto d-none d-sm-flex" method="POST">
+                @csrf
+                @method('POST')
+                <input autocomplete="off" type="search" class="form-control form-control-lg rounded me-4 search ms-5"
+                    placeholder="Search" style="width: 20vw;" name="search" value="{{ old('search') ?? isset($keyword) ? $keyword : '' }}" />
             </form>
         </div>
         <!-- Collapsible wrapper -->

@@ -22,22 +22,13 @@ class PostService
         $this->postTag = app(PostTag::class);
     }
 
-    public function index()
+    public function index($request)
     {
-        $posts = $this->post->postList();
-            // ->map(function($post) {
-            //     return collect([
-            //         'id' => $post->id,
-            //         'user_id' => $post->user_id,
-            //         'post_id' => $post->category_id,
-            //         'title' => $post->title,
-            //         'plain_description' => $post->plain_description,
-            //         'html_description' => $post->html_description,
-            //         'status' => $post->status == 1 ? PostStatus::ACTIVE : PostStatus::INACTIVE
-            //     ]);
-            // });
+        if ($request->search) {
+            return $this->post->postFilter($request->search);
+        }
 
-        return $posts;
+        return $this->post->postList();
     }
 
     public function getPostByYear($year)
@@ -50,8 +41,12 @@ class PostService
         return $this->post->postByMonthList($year);
     }
 
-    public function admin()
+    public function admin($request)
     {
+        if ($request->search) {
+            return $this->post->postFilter($request->search);
+        }
+
         return $this->post->postList();
     }
 

@@ -40,7 +40,7 @@
           >
           <form method="POST" action="{{ route('logout') }}">
             @csrf
-            <button type="submit" class="list-group-item list-group-item-action py-2 ripple"
+            <button type="submit" class="list-group-item list-group-item-action py-2 ripple logout"
             ><i class="fas fa-money-bill fa-fw me-3"></i>Logout</button>
           </form>
         </div>

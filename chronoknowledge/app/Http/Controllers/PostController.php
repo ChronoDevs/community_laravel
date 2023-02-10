@@ -45,8 +45,9 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        $posts = $this->postService->index();
-
+        return $request;
+        $posts = $this->postService->index($request);
+        return $posts;
         return view('posts.index', compact ('$posts'));
     }
 
@@ -98,7 +99,6 @@ class PostController extends Controller
         $post = $this->postService->create($request, $user);
 
         return $this->response->formatView($post);
-
     }
 
     /**

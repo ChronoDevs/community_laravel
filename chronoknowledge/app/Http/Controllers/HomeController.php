@@ -43,25 +43,31 @@ class HomeController extends Controller
     public function index(Request $request)
     {
 
-        $posts = $this->postService->index();
+        $posts = $this->postService->index($request);
+        $keyword = $request->search;
 
-        return view('index', compact ('posts'));
+        return view('index', compact ('posts', 'keyword'));
     }
 
     /**
      * Returns admin dashboard
      */
-    public function admin()
+    public function admin(Request $request)
     {
+
         $categories = $this->categoryService->index();
-        $posts = $this->postService->admin()->get()->toArray();
+        $posts = $this->postService->admin($request)->get()->toArray();
         $tags = $this->tagService->index();
         $likes = $this->postLikeService->index()->get();
         $favorites = $this->postFavoriteService->index();
         $postsByMonth = $this->postService->getPostByMonth(2023);
         $postsByYear = $this->postService->getPostByYear(2023);
 
-        // return $postsByYear->where('year', 2022);
         return view('admin.index', compact('categories', 'posts', 'tags', 'likes', 'favorites', 'postsByMonth', 'postsByYear'));
+    }
+
+    public function search(Request $request)
+    {
+        return dd($request);
     }
 }

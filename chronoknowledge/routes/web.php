@@ -34,16 +34,15 @@ Route::group(['middleware' => 'guest'], function () {
     Route::post('/reset-password', [PasswordResetController::class, 'update'])->name('password.update');
     Route::get('/google-login', [LoginController::class, 'redirectToGoogle'])->name('auth.google');
     Route::get('/auth/google/callback', [LoginController::class, 'loginWithGoogle'])->name('login.google-callback');
+
     // Route::get('/google-login', [LoginController::class, 'loginWithGoogle'])->name('login.google');
-
-
 });
 
 //posts
 Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-
+    Route::post('/search', [HomeController::class, 'index'])->name('posts.search');
     Route::group(['prefix' => '/user'], function () {
         //posts
         Route::group(['prefix' => '/posts'], function () {

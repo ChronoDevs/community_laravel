@@ -1,26 +1,21 @@
 @extends('layouts.auth')
 @section('content')
-    <div class="container py-2 h-100 clearfix">
+    <div class="container py-2 h-100 clearfix my-5">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-12 col-md-8 col-lg-7 col-xl-6">
-                <div class="card shadow-2-strong border" style="border-radius: 1rem; background-color: #242526;">
+                <div class="card shadow-2-strong border loginCard mx-auto my-auto">
                     <div class="card-body p-5 text-center">
-                        <h3>Chronostep Community </h3>
-                        <h6>Welcome to the amazing community of engineers in Chronostep Inc.</h6>
-                        <div class="primary">
-                            @if ($errors->any())
-                                {{$errors}}
-                            @endif
+                        <h3 class="chronoCommunity"><span class="chronoCommunity">Chronostep </span> <span class="chronoCommunity1">Community</span>  </h3>
+                        <h6 class="welcome">Welcome to the amazing community of engineers in Chronostep Inc.</h6>
+                        <div class="container mt-5 mb-2">
+                            <a class="btn btn-lg btn-block btn-primary mb-2 facebookSignin"
+                            type="button"><i class="fab fa-facebook-f me-2 px-auto"></i>Continue with facebook</a>
                         </div>
-                        <div class="container mb-5 mt-2">
-                            <a class="btn btn-lg btn-block btn-primary" style="background-color: #dd4b39;" href="{{ route('auth.google') }}?method=login">
-                                <i class="fab fa-google me-2"></i> Sign in with google</a>
+                        <div class="container mb-4 mt-4">
+                            <a class="btn btn-lg btn-block btn-primary googleSignin py-auto" href="{{ route('auth.google') }}?method=login">
+                                <i class="fab fa-google me-2"></i> Continue with google</a>
                         </div>
-                        <div class="container mt-4 mb-2">
-                            <button class="btn btn-lg btn-block btn-primary mb-2" style="background-color: #3b5998;"
-                            type="submit"><i class="fab fa-facebook-f me-2"></i>Sign in with facebook</button>
-                        <h6 class="mb-5">Have a password? Continue with your email address</h6>
-                        </div>
+                        <h6 class="mb-4 text-light">Have a password? Continue with your email address</h6>
                         <form action="{{ route('login') }}" class="form" method="POST">
                             @csrf
                             <div class="form-outline mb-4">
@@ -57,3 +52,5 @@
         </div>
     </div>
 @endsection
+
+

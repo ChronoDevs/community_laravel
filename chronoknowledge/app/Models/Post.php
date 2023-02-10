@@ -98,8 +98,8 @@ class Post extends Model
     public function scopePostList($query)
     {
         return $query->with(['user','likes', 'comments', 'favorites'])
-            ->latest();
-            // ->paginate(10);
+            ->latest()
+            ->paginate(10);
     }
 
     /**
@@ -155,5 +155,22 @@ class Post extends Model
             // ->whereYear('created_at', $year)
             ->orderBy('year', 'desc')
             ->get();
+    }
+
+    /**
+     * Filters post
+     *
+     * @param string $keyword
+     *
+     * @return Illuminate\Database\Eloquent\Builder $query
+     */
+    public function scopePostFilter($query, $keyword)
+    {
+        return $query->with(['user', 'likes', 'comments', 'favorites'])
+            ->where('title', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('plain_description', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('html_description', 'LIKE', '%' . $keyword . '%')
+            ->orderBy('id', 'desc')
+            ->paginate(10);
     }
 }
