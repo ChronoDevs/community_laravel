@@ -19,7 +19,8 @@ class PostFavoritePolicy
      */
     public function viewAnyFavorite(User $user)
     {
-        return RoleService::isUser();
+        // return RoleService::isUser();
+        return true;
     }
 
     /**
@@ -31,7 +32,7 @@ class PostFavoritePolicy
      */
     public function view(User $user, PostFavorite $postFavorite)
     {
-        //
+        return true;
     }
 
     /**

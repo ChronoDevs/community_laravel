@@ -25,10 +25,14 @@ class PostService
     public function index($request)
     {
         if ($request->search) {
-            return $this->post->postFilter($request->search);
+            return $this->post->postFilterByTitle($request->search);
+        } elseif ($request->category) {
+            return $this->post->postFilterByCategory($request->category);
+        } elseif ($request->tag) {
+            return $this->post->postFilterByTag($request->tag);
+        } else {
+            return $this->post->postList();
         }
-
-        return $this->post->postList();
     }
 
     public function getPostByYear($year)

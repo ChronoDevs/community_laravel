@@ -1,6 +1,6 @@
 @extends('layouts.auth')
 @section('content')
-    <div class="container py-2 h-100 clearfix my-5">
+    <div class="container py-2 h-100 clearfix my-2">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-12 col-md-8 col-lg-7 col-xl-6">
                 <div class="card shadow-2-strong border loginCard mx-auto my-auto">
@@ -19,15 +19,15 @@
                         <form action="{{ route('login') }}" class="form" method="POST">
                             @csrf
                             <div class="form-outline mb-4">
-                                <label class="form-label" for="typeEmailX-2" style="float:left">Email</label>
-                                <input type="email" id="typeEmailX-2" class="form-control form-control-lg" name="email"/>
+                                <label class="form-label text-light" for="typeEmailX-2" style="float:left">Email</label>
+                                <input type="email" id="typeEmailX-2" class="form-control form-control-lg input-dark" name="email"/>
                             </div>
                             @error('email')
                                 <span class="text text-danger mb-1">{{ $message }}</span>
                             @enderror
                             <div class="form-outline mb-4">
-                                <label class="form-label" for="typePasswordX-2" style="float:left">Password</label>
-                                <input type="password" id="typePasswordX-2" class="form-control form-control-lg" name="password"/>
+                                <label class="form-label text-light" for="typePasswordX-2" style="float:left">Password</label>
+                                <input type="password" id="typePasswordX-2" class="form-control form-control-lg input-dark" name="password"/>
                             </div>
                             @error('password')
                                 <span class="text text-danger mb-1">{{ $message }}</span>
@@ -35,7 +35,7 @@
                             <!-- Checkbox -->
                             <div class="form-check d-flex justify-content-start mb-4">
                                 <input class="form-check-input" type="checkbox" value="1" id="form1Example3" name="remember"/>&nbsp;&nbsp;
-                                <label class="form-check-label" for="form1Example3"> Remember password </label>
+                                <label class="form-check-label text-light" for="form1Example3"> Remember password </label>
                             </div>
                             <button class="btn btn-primary btn-lg w-100" type="submit">Continue</button>
                         </form>

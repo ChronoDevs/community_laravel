@@ -50,7 +50,7 @@ class TagService implements TagInterface
 
     public function index()
     {
-        $tags = $this->tag->tagList();
+        $tags = $this->tag->tags();
 
         return $tags;
     }

@@ -20,7 +20,8 @@ class PostPolicy
      */
     public function viewAnyPost(User $user)
     {
-        return RoleService::isUser();
+        // return RoleService::isUser();
+        return true;
     }
 
     /**
@@ -32,7 +33,8 @@ class PostPolicy
      */
     public function viewPost(User $user, Post $post)
     {
-        return $user->id === $post->user_id;
+        // return $user->id === $post->user_id;
+        return true;
     }
 
     /**

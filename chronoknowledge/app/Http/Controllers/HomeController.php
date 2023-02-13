@@ -42,11 +42,13 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-
         $posts = $this->postService->index($request);
         $keyword = $request->search;
+        $tags = $this->tagService->index();
+        $categories = $this->categoryService->index();
+        $view = auth()->check() ? 'home' : 'index';
 
-        return view('index', compact ('posts', 'keyword'));
+        return view($view, compact ('posts', 'keyword', 'tags', 'categories'));
     }
 
     /**
@@ -54,7 +56,6 @@ class HomeController extends Controller
      */
     public function admin(Request $request)
     {
-
         $categories = $this->categoryService->index();
         $posts = $this->postService->admin($request)->get()->toArray();
         $tags = $this->tagService->index();

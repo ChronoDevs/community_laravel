@@ -1,11 +1,24 @@
 @extends('layouts.app')
 @section('content')
+<div class="container my-auto">
+    <span class="mx-2">
+        <a href="{{ '?filter=relevant' }}"
+            class="upperFilterActive">Relevant</a>
+    </span>
+    <span class="mx-2 text-primary">
+        <a href="{{ '?filter=latest' }}"
+        class="upperFilter">Latest</a>
+    </span>
+    <span class="mx-2 text-primary">
+        <a href="{{ '?filter=top' }}"
+        class="upperFilter">Top</a>
+    </span>
+</div>
     <a href="{{ route('posts.create') }}"
-            class="btn btn-primary text-decoration-none text-primary text-white" style="position:sticky;top:15%;left:70%;">Create Post<i class="fa-regular fa-plus ms-1"></i></a>
-    <div class="container-fluid flex justify-content-center justify-center align-items-center">
+            class="btn btn-primary text-decoration-none text-primary text-white mt-1" style="position:sticky;top:12vh;left:70%;">Create Post<i class="fa-regular fa-plus ms-1"></i></a>
+    <div class="container-fluid flex justify-content-center">
         @forelse ($posts as $post)
-            @can('viewAnyPost', $post)
-                <div class="card text-white mb-3 post" style="max-width: 35rem;">
+                <div class="card text-white mb-3 post">
                     <div class="card-header">
                         <div class="container flex justify-left ms-0">
                             <div class="row">
@@ -52,18 +65,18 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title">
+                        <h5 class="card-title postTitle">
                             {{ $post->title }}
                         </h5>
                         {{-- <p class="card-text">
                             {{ $post->plain_description }}
                         </p> --}}
-                        <p class="card-text">
+                        {{-- <p class="card-text">
                             {!! $post->html_description !!}
-                        </p>
+                        </p> --}}
                         <div class="row">
                             @foreach ($post->tags as $tag)
-                                <div class="col">
+                                <div class="col-sm-2">
                                     #{{ $tag->description }}
                                 </div>
                             @endforeach
@@ -169,7 +182,6 @@
             </div>
         </div>
     </div>
-    @endcan
 @empty
     <div class="container flex text-center justify-center">No post found.</div>
 @endforelse

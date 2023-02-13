@@ -19,7 +19,7 @@ class CategoryPolicy
      */
     public function viewAnyCategory(User $user)
     {
-        return RoleService::checkAdmin($user);
+        return true;
     }
 
     /**

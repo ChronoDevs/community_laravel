@@ -20,7 +20,8 @@ class PostCommentPolicy
      */
     public function viewAnyComments(User $user)
     {
-        return RoleService::isUser();
+        // return RoleService::isUser();
+        return true;
     }
 
     /**
@@ -32,7 +33,7 @@ class PostCommentPolicy
      */
     public function viewComment(User $user, PostComment $postComment)
     {
-        return $user->id === $postComment->user_id;
+        return true;
     }
 
     /**

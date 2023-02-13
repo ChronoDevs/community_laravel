@@ -32,8 +32,9 @@
     @section('sidebar')
         @include('layouts.user_sidebar')
     @show
+    @yield('right_sidebar')
     <!--Main layout-->
-    <main style="margin-top: 58px;">
+    <main style="margin-top: 6%;">
         <div class="container pt-4">
             @include('flash_message')
             @yield('content')

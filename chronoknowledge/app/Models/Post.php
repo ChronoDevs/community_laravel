@@ -110,7 +110,7 @@ class Post extends Model
         return $query->with(['user', 'likes', 'comments', 'favorites'])
             ->where('status', PostStatus::ACTIVE)
             ->latest();
-            // ->get();
+        // ->get();
     //         ->paginate(10);
     }
 
@@ -137,7 +137,7 @@ class Post extends Model
             ->select('posts.*', DB::raw('DAY(created_at) as day, MONTH(posts.created_at) as month'))
             // ->whereYear('created_at', $year)
             ->orderBy('month', 'asc')
-            ->orderBy('day' , 'desc')
+            ->orderBy('day', 'desc')
             // ->groupBy('month', 'day')
             // ->groupBy('posts.created_at')
             // ->latest()
@@ -158,19 +158,59 @@ class Post extends Model
     }
 
     /**
-     * Filters post
+     * Filters post by title
      *
      * @param string $keyword
      *
      * @return Illuminate\Database\Eloquent\Builder $query
      */
-    public function scopePostFilter($query, $keyword)
+    public function scopePostFilterByTitle($query, $keyword)
     {
         return $query->with(['user', 'likes', 'comments', 'favorites'])
-            ->where('title', 'LIKE', '%' . $keyword . '%')
-            ->orWhere('plain_description', 'LIKE', '%' . $keyword . '%')
-            ->orWhere('html_description', 'LIKE', '%' . $keyword . '%')
-            ->orderBy('id', 'desc')
+            ->where('posts.title', 'LIKE', '%' . $keyword . '%')
+            ->orderBy('posts.id', 'desc')
+            ->paginate(10);
+    }
+
+     /**
+     * Filters post by category
+     *
+     * @param string $keyword
+     *
+     * @return Illuminate\Database\Eloquent\Builder $query
+     */
+    public function scopePostFilterByCategory($query, $keyword)
+    {
+        return $query->with(['user', 'likes', 'comments', 'favorites'])
+            ->join('categories as c', function ($join) {
+                $join->on('posts.category_id', '=', 'c.id');
+            })
+            ->where('c.title', 'LIKE', $keyword)
+            ->join('post_tags as t', function ($join) {
+                $join->on('posts.id', '=', 't.post_id');
+            })
+            ->orWhere('t.description', $keyword)
+            ->select('posts.*', 'c.title as des')
+            ->orderBy('posts.id', 'desc')
+            ->paginate(10);
+    }
+
+    /**
+     * Filters post by tag
+     *
+     * @param string $keyword
+     *
+     * @return Illuminate\Database\Eloquent\Builder $query
+     */
+    public function scopePostFilterByTag($query, $keyword)
+    {
+        return $query->with(['user', 'likes', 'comments', 'favorites'])
+            ->join('post_tags as t', function ($join) {
+                $join->on('posts.id', '=', 't.post_id');
+            })
+            ->where('t.description', $keyword)
+            ->select('posts.*')
+            ->orderBy('posts.id', 'desc')
             ->paginate(10);
     }
 }

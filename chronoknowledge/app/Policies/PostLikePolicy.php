@@ -20,7 +20,8 @@ class PostLikePolicy
      */
     public function viewAnyLikes(User $user)
     {
-        return RoleService::isUser();
+        // return RoleService::isUser();
+        return true;
     }
 
     /**
@@ -34,7 +35,8 @@ class PostLikePolicy
      */
     public function viewLike(User $user, PostLike $postLike)
     {
-        return $user->id === $postLike->user_id;
+        // return $user->id === $postLike->user_id;
+        return true;
     }
 
     /**

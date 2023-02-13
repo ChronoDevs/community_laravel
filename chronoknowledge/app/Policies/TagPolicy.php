@@ -28,7 +28,8 @@ class TagPolicy
      */
     public function viewAnyTag(User $user)
     {
-        return $this->defaultChecker($user);
+        // return $this->defaultChecker($user);
+        return true;
     }
 
     /**
@@ -40,7 +41,8 @@ class TagPolicy
      */
     public function viewTag(User $user, Tag $tag)
     {
-        return $this->defaultChecker($user);
+        // return $this->defaultChecker($user);
+        return true;
     }
 
     /**
