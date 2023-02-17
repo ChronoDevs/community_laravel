@@ -9,18 +9,18 @@
             class="list-group-item list-group-item-action py-2 ripple {{ last(explode('/', request()->url())) == 'admin' ? 'active' : '' }}"
             aria-current="true"
           >
-            <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Dashboard</span>
+          <img src="{{ asset('storage/assets/home.svg')}}" class="mx-2" alt="Home"><span>Dashboard</span>
           </a>
           <a href="{{ route('admin.posts') }}" class="list-group-item list-group-item-action py-2 ripple {{ str_contains(request()->url(), 'posts') ? 'active' : '' }}">
-            <i class="fas fa-chart-bar fa-fw me-3"></i><span>Manage Posts</span></a>
+            <img src="{{ asset('storage/assets/listing.svg')}}" class="mx-2" alt="Listing"><span>Manage Posts</span></a>
           <a href="{{ route('admin.tags.index') }}" class="list-group-item list-group-item-action py-2 ripple {{ str_contains(request()->url(), 'tags') ? 'active' : '' }}">
-            <i class="fas fa-chart-bar fa-fw me-3"></i><span>Tags</span></a>
+            <img src="{{ asset('storage/assets/favorites.svg')}}" class="mx-2" alt="favorites"><span>Tags</span></a>
           <a href="{{ route('admin.categories.index') }}" class="list-group-item list-group-item-action py-2 ripple {{ str_contains(request()->url(), 'categories') ? 'active' : '' }}"
-            ><i class="fas fa-globe fa-fw me-3"></i><span>Categories</span></a>
+            ><img src="{{ asset('storage/assets/about.svg')}}" class="mx-2" alt="About"><span>Categories</span></a>
             <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button type="submit" class="text-danger list-group-item list-group-item-action py-2 ripple"
-            ><i class="fas fa-money-bill fa-fw me-3"></i>Logout</button>
+            ><img src="{{ asset('storage/assets/logout.svg')}}" class="mx-2">Logout</button>
           </form>
         </div>
       </div>

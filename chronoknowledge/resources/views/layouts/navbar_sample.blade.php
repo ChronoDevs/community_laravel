@@ -22,7 +22,7 @@
                     @method('POST')
                     <input autocomplete="off" type="search" class="form-control form-control-lg rounded me-4 search ms-5"
                         placeholder="Search" style="width: 20vw;" name="search"
-                        value="{{ old('search') ?? isset($keyword) ? $keyword : '' }}" />
+                        value="{{ old('search') ?? isset($keyword) ? $keyword : '' }}"/>
                 </form>
                 <!-- Collapsible wrapper -->
 

@@ -12,9 +12,9 @@
                     method="POST">
                     @csrf
                     @method('POST')
-                    <input autocomplete="off" type="search" class="form-control form-control-lg rounded search "
+                    <input autocomplete="off" type="search" class="form-control form-control-lg rounded search input-dark "
                         placeholder="Search" style="width: 20vw;" name="search"
-                        value="{{ old('search') ?? isset($keyword) ? $keyword : '' }}" />
+                        value="{{ old('search') ?? isset($keyword) ? $keyword : '' }}"  @if(auth()->check() && auth()->user()->role_id == 1) disabled @endif />
                 </form>
           </li>
         </ul>

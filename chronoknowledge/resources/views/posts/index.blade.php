@@ -188,7 +188,7 @@
     @empty
         <div class="container flex text-center justify-center text-light">No post found.</div>
     @endforelse
-    <div class="container my-3 bg-transparent mx-2">{!! $posts->links() !!}</div>
+    <div class="container my-3 bg-transparent mx-2">@if($posts instanceof \Illuminate\Pagination\LengthAwarePaginator ){!! $posts->links() !!} @endif</div>
 </div>
 </div>
 @include('comments.modal')

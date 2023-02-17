@@ -256,9 +256,11 @@ class Post extends Model
      */
     public function scopeRelevantPost($query)
     {
-        return $query->with('category', 'tags');
-            // ->sortBy('category.title')
-            // ->sortBy('tags.title');
+        return $query->with('category', 'tags')
+            ->orderBy('posts.user_id', 'asc')
+            ->get()
+            ->sortBy('category.title')
+            ->sortBy('tags.title');
     }
 
     /**

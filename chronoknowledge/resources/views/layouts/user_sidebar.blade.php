@@ -11,39 +11,39 @@
             class="list-group-item list-group-item-action py-2 ripple {{ last(explode('/', request()->url())) == 'home' || str_contains(request()->url(), 'posts') ? 'active' : '' }}"
             aria-current="true"
           >
-            <i class="fas fa-tachometer-alt fa-fw me-3"></i>Home
+            <img src="{{ asset('storage/assets/home.svg')}}" class="mx-2" alt="Home">Home
           </a>
           <a href="{{ route('listing') }}" class="list-group-item list-group-item-action py-2 ripple {{ last(explode('/', request()->url())) == 'listing' ? 'active' : '' }}">
-            <i class="fas fa-chart-area fa-fw me-3"></i><span>Listing</span>
+            <img src="{{ asset('storage/assets/listing.svg')}}" class="mx-2" alt="Listing"><span>Listing</span>
           </a>
           <a href="{{ route('favorites.index') }}" class="list-group-item list-group-item-action py-2 ripple {{ last(explode('/', request()->url())) == 'favorites' ? 'active' : '' }}"
-            ><i class="fas fa-lock fa-fw me-3"></i><span>Favorites</span></a
+            ><img src="{{ asset('storage/assets/favorites.svg')}}" class="mx-2" alt="favorites"><span>Favorites</span></a
           >
           <a href="{{ route('team') }}" class="list-group-item list-group-item-action py-2 ripple {{ last(explode('/', request()->url())) == 'team' ? 'active' : '' }}"
-            ><i class="fas fa-chart-line fa-fw me-3"></i><span>Team</span></a
+            ><img src="{{ asset('storage/assets/team.svg')}}" class="mx-2" alt="Team"><span>Team</span></a
           >
           <a href="{{ route('faqs') }}" class="list-group-item list-group-item-action py-2 ripple {{ last(explode('/', request()->url())) == 'faqs' ? 'active' : '' }}">
-            <i class="fas fa-chart-pie fa-fw me-3"></i><span>FAQs</span>
+            <img src="{{ asset('storage/assets/faq.svg')}}" class="mx-2" alt="FAQS"><span>FAQs</span>
           </a>
           <a href="{{ route('about') }}" class="list-group-item list-group-item-action py-2 ripple {{ last(explode('/', request()->url())) == 'about' ? 'active' : '' }}"
-            ><i class="fas fa-chart-bar fa-fw me-3"></i><span>About</span></a
+            ><img src="{{ asset('storage/assets/about.svg')}}" class="mx-2" alt="About"><span>About</span></a
           >
           <a href="{{ route('guides') }}" class="list-group-item list-group-item-action py-2 ripple {{ last(explode('/', request()->url())) == 'guides' ? 'active' : '' }}"
-            ><i class="fas fa-globe fa-fw me-3"></i><span>Guides</span></a
+            ><img src="{{ asset('storage/assets/guide.svg')}}" class="mx-2" alt="Guide"><span>Guides</span></a
           >
           <a href="{{ route('code') }}" class="list-group-item list-group-item-action py-2 ripple {{ last(explode('/', request()->url())) == 'code' ? 'active' : '' }}"
-            ><i class="fas fa-building fa-fw me-3"></i><span>Code of Conduct</span></a
+            ><img src="{{ asset('storage/assets/code.svg')}}" class="mx-2" alt="Code"><span>Code of Conduct</span></a
           >
           <a href="{{ route('privacy-policy') }}" class="list-group-item list-group-item-action py-2 ripple {{ last(explode('/', request()->url())) == 'privacy-policy' ? 'active' : '' }}"
-            ><i class="fas fa-calendar fa-fw me-3"></i><span>Privacy Policy</span></a
+            ><img src="{{ asset('storage/assets/privacy.svg')}}" class="mx-2" alt="Privacy"><span>Privacy Policy</span></a
           >
           <a href="{{ route('terms') }}" class="list-group-item list-group-item-action py-2 ripple {{ last(explode('/', request()->url())) == 'terms' ? 'active' : '' }}"
-            ><i class="fas fa-users fa-fw me-3"></i><span>Terms of Use</span></a
+            ><img src="{{ asset('storage/assets/term.svg')}}" class="mx-2" alt="Term"><span>Terms of Use</span></a
           >
           <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button type="submit" class="list-group-item list-group-item-action py-2 ripple logout"
-            ><i class="fas fa-money-bill fa-fw me-3"></i>Logout</button>
+            ><img src="{{ asset('storage/assets/logout.svg')}}" class="mx-2" alt="Home"></i>Logout</button>
           </form>
         </div>
       </div>

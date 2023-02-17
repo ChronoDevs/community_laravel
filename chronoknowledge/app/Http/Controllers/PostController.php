@@ -48,7 +48,7 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        $posts = $this->postService->index($request);
+        $posts = $this->postService->admin($request);
         $notifications = $this->notification->getNotifsByUser();
 
         return view('admin.posts.index', compact ('posts', 'notifications'));

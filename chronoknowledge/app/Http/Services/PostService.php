@@ -27,25 +27,25 @@ class PostService
         $posts = $this->post->relationship();
 
         if ($request->search) {
-            $posts = $posts->postFilterByTitle($request->search);
+            return $posts->postFilterByTitle($request->search)->get();
         }
         if ($request->category) {
-            $posts = $posts->postFilterByCategory($request->category);
+            return $posts->postFilterByCategory($request->category)->get();
         }
         if ($request->tag) {
-            $posts = $posts->postFilterByTag($request->tag);
+            return $posts->postFilterByTag($request->tag)->get();
         }
         if ($request->filter == 'relevant') {
-            $posts = $posts->relevantPost();
+            return  $posts->relevantPost();
         }
         if ($request->filter == 'latest') {
-            $posts = $posts->latestPost();
+            return $posts->latestPost()->get();
         }
         if ($request->filter == 'top') {
-            $posts = $posts->topPost();
+            return  $posts->topPost()->get();
         }
 
-        return $posts->postList($request->pagination);
+        return $posts->postList(10);
     }
 
     public function countPosts() {
