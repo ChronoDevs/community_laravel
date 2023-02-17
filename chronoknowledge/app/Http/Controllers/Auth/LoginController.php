@@ -15,11 +15,13 @@ use App\Models\User;
 class LoginController extends Controller
 {
     private $user;
+    private $socialAccount;
 
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
         $this->user = app(User::class);
+        $this->socialAccount = app(LinkedSocialAccount::class);
     }
     public function index()
     {
@@ -79,12 +81,7 @@ class LoginController extends Controller
                 }
             }
 
-            $socialAccount = LinkedSocialAccount::updateOrCreate([
-                'user_id' => $user->id,
-                'provider_id' => $googleUser->id,
-                'provider_name' => 'google',
-                'email' => $googleUser->email,
-            ]);
+            $this->socialAccount->store($user, $googleUser);
 
             Auth::login($user);
 

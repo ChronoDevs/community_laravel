@@ -30,7 +30,7 @@ class PostFavorite extends Model
      */
     public function post()
     {
-        return $this->belongsTo(Post::class);
+        return $this->hasOne(Post::class, 'id', 'post_id');
     }
 
     /**
@@ -49,11 +49,20 @@ class PostFavorite extends Model
     public function scopeFavoritesByYearList($query, $year)
     {
         return $query->with(['user', 'post'])
-            // ->where('status', PostStatus::INACTIVE)
             ->select('favorites.*', DB::raw('YEAR(posts.created_at) as year, MONTH(posts.created_at) as month'))
-            // ->whereYear('created_at', $year)
             ->orderBy('year', 'desc')
             ->orderBy('month', 'desc')
             ->get();
+    }
+
+    /**
+     * List all likes by year
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     *
+     * @return void
+     */
+    public function scopeGetPost($query) {
+        return $query->with('post', 'user')->get();
     }
 }

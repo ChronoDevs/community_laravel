@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Services\PostFavoriteService;
 use App\Http\Requests\PostFavoriteRequest;
+use App\Models\Notification;
 
 class PostFavoriteController extends Controller
 {
@@ -14,6 +15,8 @@ class PostFavoriteController extends Controller
      */
     private $postFavoriteService;
     private $categoryService;
+    private $notification;
+    private $postService;
 
     /**
      * Initialize the PostFavoriteService via constructor
@@ -23,13 +26,21 @@ class PostFavoriteController extends Controller
     public function __construct(PostFavoriteService $postFavoriteService)
     {
         $this->postFavoriteService = $postFavoriteService;
+        $this->notification = app(Notification::class);
     }
 
-    public function index()
+    /**
+     * List all favorited posts
+     *
+     * @param Illuminate\Http\Request $request
+     */
+    public function index(Request $request)
     {
-        $favorites = $this->postFavoriteService->index();
+        $posts = $this->postFavoriteService->index();
+        $notifications = $this->notification->getNotifsByUser();
+        $count = $this->postFavoriteService->count();
 
-        return view('favorites.index', compact('favorites'));
+        return view('favorites.index', compact('posts', 'notifications', 'count'));
     }
 
     /**

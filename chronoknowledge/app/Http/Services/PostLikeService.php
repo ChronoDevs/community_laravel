@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 
 use App\Models\PostLike;
+use App\Models\Notification;
 use Illuminate\Support\Facades\DB;
 use App\Components\ResponseComponent;
 
@@ -10,11 +11,13 @@ class PostLikeService
 {
     private $response;
     private $postLike;
+    private $notification;
 
     public function __construct(ResponseComponent $response)
     {
         $this->response = $response;
         $this->postLike = app(PostLike::class);
+        $this->notification = app(Notification::class);
     }
 
     public function index() {
@@ -33,6 +36,16 @@ class PostLikeService
                 'post_id' => $request['post_id'],
             ]);
 
+            if ($postLike) {
+                $data = [
+                    'user_id' => $postLike->user_id,
+                    'receiver_id' => $postLike->post->user_id,
+                    'post_id' => $postLike->post_id,
+                    'notification_type' => 'liked'
+                ];
+
+                $this->notification->createNotif($data);
+            }
             return $this->response->succeed('post', 'create');
         } catch (Throwable $e) {
             return $this->response->fail('post', 'create');
@@ -50,7 +63,7 @@ class PostLikeService
     public function destroy($post_id, $user_id)
     {
         try {
-            PostLike::where('user_id', $user_id)
+            $postLike = PostLike::where('user_id', $user_id)
                 ->where('post_id', $post_id)
                 ->whereNull('deleted_at')
                 ->first()

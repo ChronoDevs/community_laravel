@@ -36,15 +36,27 @@ Route::group(['middleware' => 'guest'], function () {
     Route::get('/auth/google/callback', [LoginController::class, 'loginWithGoogle'])->name('login.google-callback');
     Route::get('/', [HomeController::class, 'index'])->name('index');
 });
+
+//public pages
+Route::get('/posts/{post}/show', [PostController::class, 'show'])->name('posts.show');
+Route::get('/privacy-policy', [HomeController::class, 'public'])->name('privacy-policy');
+Route::get('/team', [HomeController::class, 'public'])->name('team');
+Route::get('/faqs', [HomeController::class, 'public'])->name('faqs');
+Route::get('/about', [HomeController::class, 'public'])->name('about');
+Route::get('/guides', [HomeController::class, 'public'])->name('guides');
+Route::get('/code', [HomeController::class, 'public'])->name('code');
+Route::get('/terms', [HomeController::class, 'public'])->name('terms');
 Route::post('/', [HomeController::class, 'index'])->name('posts.search');
+
 //posts
-Route::group(['middleware' => ['auth', 'admin']], function () {
+Route::group(['middleware' => ['auth']], function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/listing', [HomeController::class, 'listing'])->name('listing');
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     Route::group(['prefix' => '/user'], function () {
         //posts
         Route::group(['prefix' => '/posts'], function () {
-            Route::get('/{post}/show', [PostController::class, 'show'])->name('posts.show');
+            // Route::get('/{post}/show', [PostController::class, 'show'])->name('posts.show');
             Route::get('/create', [PostController::class, 'create'])->name('posts.create');
             Route::post('/store', [PostController::class, 'store'])->name('posts.store');
             Route::get('/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
@@ -75,7 +87,9 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
 
     Route::group(['prefix' => '/admin'], function () {
         Route::get('/', [HomeController::class, 'admin'])->name('admin.dashboard');
-
+        Route::post('/search', [HomeController::class, 'admin'])->name('admin.search');
+        Route::get('/posts', [PostController::class, 'index'])->name('admin.posts');
+        Route::Post('/posts/edit/{post}', [PostController::class, 'updateViaAdmin'])->name('admin.posts.edit');
         //tags
         Route::group(['prefix' => '/tags'], function () {
             Route::get('/', [TagController::class, 'index'])->name('admin.tags.index');

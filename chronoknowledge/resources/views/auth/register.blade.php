@@ -20,11 +20,17 @@
                         <div class="container-fluid mt-4 mb-3">
                             <div class="mb-2 flex text-light text-center"
                                 style="font-weight: 500;font-size: 16px;line-height: 19px;">
-                                <span class="py-auto px-auto" style="padding-top:auto; padding-bottom:auto">----</span>
+                                <span class="text-light me-4">━━</span>
                                 Already have an account? &nbsp;&nbsp;
                                 <a href="{{ route('login') }}">Log in.</a>
+                                <span class="text-light ms-4">━━</span>
                             </div>
                         </div>
+                        {{-- @if ($errors->any())
+                            <div class="text-danger">
+                              {{ $errors }}
+                            </div>
+                        @endif --}}
                         <form class="px-md-2" action="{{ route('register') }}" method="POST">
                             @csrf
                             <div class="form-outline mb-1">
@@ -92,7 +98,7 @@
                                         <label class="form-label text-light float-left text-light" for="dateOfBirth">Date of Birth</label>
                                         <input type="tel" id="dateOfBirth" class="form-control form-control-lg input-dark"
                                             value="{{ old('date_of_birth') }}" name="date_of_birth"
-                                            placeholder="mm-dd-yyyy" />
+                                            placeholder="mm-dd-yyyy" autocomplete="off" />
                                         @error('date_of_birth')
                                             <span class="text text-danger mb-1">{{ $message }}</span>
                                         @enderror
@@ -172,13 +178,12 @@
         </div>
     </div>
 @endsection
-@section('scripts')
+@push('scripts')
     <script>
-        // jQuery.noConflict();
         $(document).ready(function() {
             $('#dateOfBirth').datepicker({
                 dateFormat: "mm-dd-yy"
             });
         })
     </script>
-@endsection
+@endpush

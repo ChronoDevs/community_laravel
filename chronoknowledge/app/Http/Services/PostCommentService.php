@@ -7,16 +7,19 @@ use Illuminate\Support\Facades\DB;
 use App\Components\ResponseComponent;
 use App\Notifications\PostCommentNotification;
 use App\Models\User;
+use App\Models\Notification;
 
 class PostCommentService
 {
     private $response;
     private $postComment;
+    private $notification;
 
     public function __construct(ResponseComponent $response)
     {
         $this->response = $response;
         $this->postComment = app(PostComment::class);
+        $this->notification = app(Notification::class);
     }
 
     public function index()
@@ -37,6 +40,17 @@ class PostCommentService
                 'description' => $request['description']
             ]);
 
+            if ($postComment) {
+                $data = [
+                    'user_id' => $postComment->user_id,
+                    'receiver_id' => $postComment->post->user_id,
+                    'post_id' => $postComment->post_id,
+                    'notification_type' => 'commented'
+                ];
+
+                $this->notification->createNotif($data);
+            }
+
             $notif = $user->notify(new PostCommentNotification($user, $postComment->post));
 
             return $this->response->succeed('comment', 'create');
@@ -56,7 +70,6 @@ class PostCommentService
         } catch (Throwable $e) {
             return $this->response->fail('comment', 'edit');
         }
-
     }
 
     public function destroy($postComment)

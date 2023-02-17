@@ -44,11 +44,11 @@ class UserRequest extends FormRequest
                 ->symbols()
                 ->uncompromised(),'confirmed'],
             'password_confirmation' => ['bail', 'required'],
-            'job_title' => ['bail', 'required', 'string'],
-            'profile' => ['bail', 'nullable', File::image()
-                ->min(5)
-                ->max(10 * 1024),
-            'dimensions:min_width=20,min_height=20','mimes:jpg,jpeg,png,gif'],
+            // 'job_title' => ['bail', 'required', 'string'],
+            // 'profile' => ['bail', 'nullable', File::image()
+            //     ->min(5)
+            //     ->max(10 * 1024),
+            // 'dimensions:min_width=20,min_height=20','mimes:jpg,jpeg,png,gif'],
         ];
     }
 }

@@ -67,7 +67,6 @@ class User extends Authenticatable
 
     public function registerUser($data)
     {
-        $data['date_of_birth'] = $this->formatDate($data['date_of_birth']);
         try {
             $user = $this->create([
                 'role_id' => UserRole::USER,
@@ -76,16 +75,17 @@ class User extends Authenticatable
                 'password' => Hash::make($data['password']),
                 'name' => $this->setName($data['first_name'], $data['middle_name'], $data['last_name']),
                 'nick_name' => $data['nick_name'],
-                'birth_date' => Carbon::createFromFormat('Y-m-d', $this->formatDate($data['date_of_birth'])),
-                'gender' => UserGender::GENDERS[$data['gender']],
+                'birth_date' => $data['date_of_birth'] ? Carbon::createFromFormat('Y-m-d', $this->formatDate($data['date_of_birth'])) : null,
+                'gender' => $data['gender'],
                 'zip_code' => $data['zip_code'],
                 'address' => $data['address'],
+                'job_title' => UserJobTitle::TITLES[1],
                 'tel' => $data['contact_number']
             ]);
 
-            return true;
+            return $user;
         } catch (Throwable $e) {
-            return false;
+            return $e;
         }
     }
 

@@ -10,6 +10,7 @@ use App\Http\Services\CategoryService;
 use App\Http\Services\TagService;
 use App\Models\Post;
 use App\Models\PostTag;
+use App\Models\Notification;
 use App\Components\ResponseComponent;
 use Throwable;
 
@@ -24,6 +25,7 @@ class PostController extends Controller
     private $response;
     private $postTag;
     private $tagService;
+    private $notification;
 
     /**
      * Initialize the PostService via constructor
@@ -38,6 +40,7 @@ class PostController extends Controller
         $this->response = $response;
         $this->postTag = app(PostTag::class);
         $this->tagService = $tagService;
+        $this->notification = app(Notification::class);
     }
 
     /**
@@ -45,10 +48,10 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        return $request;
         $posts = $this->postService->index($request);
-        return $posts;
-        return view('posts.index', compact ('$posts'));
+        $notifications = $this->notification->getNotifsByUser();
+
+        return view('admin.posts.index', compact ('posts', 'notifications'));
     }
 
     /**
@@ -58,8 +61,9 @@ class PostController extends Controller
     {
         $categories = $this->categoryService->index();
         $tags = $this->tagService->getTags();
+        $notifications = $this->notification->getNotifsByUser();
 
-        return view('posts.create', compact('categories', 'tags'));
+        return view('posts.create', compact('categories', 'tags', 'notifications'));
     }
 
     /**
@@ -69,7 +73,9 @@ class PostController extends Controller
      */
     public function show(Post $post, Request $request)
     {
-        return view('posts.view', compact('post'));
+        $notifications = $this->notification->getNotifsByUser();
+
+        return view('posts.view', compact('post', 'notifications'));
     }
 
     /**
@@ -83,8 +89,9 @@ class PostController extends Controller
         $categories = $this->categoryService->index();
         $postTags = $this->tagService->getTagsByPost($post->id);
         $tags = $this->tagService->getTags();
+        $notifications = $this->notification->getNotifsByUser();
 
-        return view('posts.edit', compact('post', 'categories', 'tags', 'postTags'));
+        return view('posts.edit', compact('post', 'categories', 'tags', 'postTags', 'notifications'));
     }
 
     /**
@@ -113,6 +120,20 @@ class PostController extends Controller
         $post = $this->postService->edit($request, $post);
 
         return $this->response->formatView($post);
+
+    }
+
+     /**
+     * Update post data via admin
+     *
+     * @param App\Models\Post $post
+     * @param Illuminate\Http\Request $request
+     */
+    public function updateViaAdmin(Post $post, Request $request)
+    {
+        $post = $this->postService->adminEdit($request, $post);
+
+        return response()->json([$post], 200);
 
     }
     /**

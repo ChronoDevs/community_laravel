@@ -19,10 +19,9 @@
     {{-- <link rel="stylesheet" href="{{ asset('storage/css/froala_editor.min.css') }}"> --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/4.0.17/css/froala_editor.min.css"
         integrity="sha512-MQMcuu7nbtekrEV/+KXG3INNq4CYNkmbnO1UcdvhE8+VYIdf0Jf1xAcvuG77xxpzIPpyvHL/ws0yBW7D49xFrA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />>
+        crossorigin="anonymous" referrerpolicy="no-referrer" >
+    <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="{{ asset('storage/css/trumbowyg.min.css') }}">
-</head>
 </head>
 
 <body>
@@ -30,13 +29,18 @@
         @include('layouts.navbar')
     @show
     @section('sidebar')
-        @include('layouts.user_sidebar')
+        @if(auth()->check())
+            @include('layouts.user_sidebar')
+        @else
+            @include('layouts.guest_sidebar')
+        @endif
     @show
     @yield('right_sidebar')
     <!--Main layout-->
-    <main style="margin-top: 6%;">
+    <main>
         <div class="container pt-4">
             @include('flash_message')
+            @include('modals.index')
             @yield('content')
         </div>
     </main>

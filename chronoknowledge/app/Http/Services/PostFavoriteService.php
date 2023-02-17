@@ -3,6 +3,8 @@
 namespace App\Http\Services;
 
 use App\Models\PostFavorite;
+use App\Models\Notification;
+use App\Models\Post;
 use Illuminate\Support\Facades\DB;
 use App\Http\Interfaces\PostFavoriteInterface;
 use App\Components\ResponseComponent;
@@ -11,18 +13,34 @@ class PostFavoriteService implements PostFavoriteInterface
 {
     private $response;
     private $postFavorite;
+    private $notification;
+    private $post;
 
     public function __construct(ResponseComponent $response)
     {
         $this->response = $response;
         $this->postFavorite = app(PostFavorite::class);
+        $this->notification = app(Notification::class);
+        $this->post = app(Post::class);
     }
 
     public function index()
     {
-        $favorites = PostFavorite::all();
+        $favorites = $this->post->favoritePosts()->paginate(10);
 
         return $favorites;
+    }
+
+    public function admin()
+    {
+        $favorites = $this->postFavorite->getPost();
+
+        return $favorites;
+    }
+
+    public function count()
+    {
+        return $this->post->favoritePosts()->count();
     }
 
     /**
@@ -40,6 +58,17 @@ class PostFavoriteService implements PostFavoriteInterface
                 'user_id' => $request['user_id'],
                 'post_id' => $request['post_id']
             ]);
+
+            if ($postFavorite) {
+                $data = [
+                    'user_id' => $postFavorite->user_id,
+                    'receiver_id' => $postFavorite->post->user_id,
+                    'post_id' => $postFavorite->post_id,
+                    'notification_type' => 'favorited'
+                ];
+
+                $this->notification->createNotif($data);
+            }
 
             return $this->response->succeed('favorite', 'create');
         } catch (Throwable $e) {

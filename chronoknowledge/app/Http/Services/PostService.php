@@ -24,20 +24,46 @@ class PostService
 
     public function index($request)
     {
+        $posts = $this->post->relationship();
+
         if ($request->search) {
-            return $this->post->postFilterByTitle($request->search);
-        } elseif ($request->category) {
-            return $this->post->postFilterByCategory($request->category);
-        } elseif ($request->tag) {
-            return $this->post->postFilterByTag($request->tag);
-        } else {
-            return $this->post->postList();
+            $posts = $posts->postFilterByTitle($request->search);
         }
+        if ($request->category) {
+            $posts = $posts->postFilterByCategory($request->category);
+        }
+        if ($request->tag) {
+            $posts = $posts->postFilterByTag($request->tag);
+        }
+        if ($request->filter == 'relevant') {
+            $posts = $posts->relevantPost();
+        }
+        if ($request->filter == 'latest') {
+            $posts = $posts->latestPost();
+        }
+        if ($request->filter == 'top') {
+            $posts = $posts->topPost();
+        }
+
+        return $posts->postList($request->pagination);
     }
 
-    public function getPostByYear($year)
+    public function countPosts() {
+        return $this->post->latest()->count();
+    }
+
+    public function countActivePosts() {
+        return $this->post->postActiveList()->count();
+    }
+
+    public function listing($request)
     {
-        return $this->post->postByYearList($year);
+        return $this->post->postActiveList()->postList($request->pagination);
+    }
+
+    public function getPostByYear()
+    {
+        return $this->post->postByYearList();
     }
 
     public function getPostByMonth($year)
@@ -51,7 +77,7 @@ class PostService
             return $this->post->postFilter($request->search);
         }
 
-        return $this->post->postList();
+        return $this->post->latest()->get();
     }
 
     public function create($request, $user)
@@ -92,6 +118,20 @@ class PostService
             return $this->response->succeed('post', 'edit', 'home');
         } catch (Throwable $e) {
             return $this->response->fail('post', 'edit', 'home');
+        }
+
+    }
+
+    public function adminEdit($request, $post)
+    {
+        try {
+            $post = $post->update([
+                'status' => $request->status ? PostStatus::ACTIVE : PostStatus::INACTIVE
+            ]);
+
+            return $post;
+        } catch (Throwable $e) {
+            return $e;
         }
 
     }

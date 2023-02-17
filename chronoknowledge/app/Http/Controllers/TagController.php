@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Services\TagService;
 use App\Models\Tag;
+use App\Models\Notification;
 use App\Components\ResponseComponent;
 use App\Http\Requests\TagRequest;
 
@@ -12,11 +13,13 @@ class TagController extends Controller
 {
     private $tagService;
     private $response;
+    private $notification;
 
     public function __construct(TagService $tagService, ResponseComponent $response)
     {
         $this->tagService = $tagService;
         $this->response = $response;
+        $this->notification = app(Notification::class);
     }
 
     /**
@@ -25,8 +28,9 @@ class TagController extends Controller
     public function index()
     {
         $tags = $this->tagService->index();
+        $notifications = $this->notification->getNotifsByUser();
 
-        return view('admin.tags.index', compact('tags'));
+        return view('admin.tags.index', compact('tags', 'notifications'));
     }
 
     /**
@@ -34,7 +38,9 @@ class TagController extends Controller
      */
     public function create()
     {
-        return view('admin.tags.create');
+        $notifications = $this->notification->getNotifsByUser();
+
+        return view('admin.tags.create', compact('notifications'));
     }
 
     /**
@@ -44,7 +50,9 @@ class TagController extends Controller
      */
     public function edit(Tag $tag)
     {
-        return view('admin.tags.edit', compact('tag'));
+        $notifications = $this->notification->getNotifsByUser();
+
+        return view('admin.tags.edit', compact('tag', 'notifications'));
     }
 
     /**

@@ -14,7 +14,8 @@ return [
         'create' => 'Succesfully created new :data.',
         'edit' => 'Succesfully edited the :data.',
         'delete' => 'Succesfully deleted :data.',
-        'send_mail' => 'Successfully sent password reset link to the email.'
+        'send_mail' => 'Successfully sent password reset link to the email.',
+        'reset_password' => 'Successfully changed your password.'
     ],
     'error' => [
         'create' => 'Failed to create new :data.',

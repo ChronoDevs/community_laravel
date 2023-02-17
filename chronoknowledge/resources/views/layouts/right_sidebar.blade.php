@@ -1,7 +1,6 @@
 <!--Main Navigation-->
-<header>
     <!-- Sidebar -->
-    <nav class=" bg-transparent sidebar_right">
+    <nav class="nav bg-transparent sidebar_right d-lg-block collapse">
         <div class="position-sticky">
             <div class="list-group list-group-flush mx-3 mt-5 bg-transparent py-4">
                 <div class="container mt-5 mb-3">
@@ -35,4 +34,4 @@
         </div>
     </nav>
     <!-- Sidebar -->
-</header>
+

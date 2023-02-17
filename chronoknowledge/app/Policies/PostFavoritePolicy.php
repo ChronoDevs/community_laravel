@@ -67,6 +67,7 @@ class PostFavoritePolicy
      */
     public function deleteFavorite(User $user, PostFavorite $postFavorite)
     {
+        // return dd($postFavorite);
         return $user->id === $postFavorite->user_id;
     }
 

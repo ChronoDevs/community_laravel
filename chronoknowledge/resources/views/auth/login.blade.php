@@ -1,9 +1,9 @@
 @extends('layouts.auth')
 @section('content')
-    <div class="container py-2 h-100 clearfix my-2">
-        <div class="row d-flex justify-content-center align-items-center h-100">
+    <div class="container clearfix">
+        <div class="row d-flex justify-content-center align-items-center">
             <div class="col-12 col-md-8 col-lg-7 col-xl-6">
-                <div class="card shadow-2-strong border loginCard mx-auto my-auto">
+                <div class="card shadow-2-strong loginCard mx-auto mt-0">
                     <div class="card-body p-5 text-center">
                         <h3 class="chronoCommunity"><span class="chronoCommunity">Chronostep </span> <span class="chronoCommunity1">Community</span>  </h3>
                         <h6 class="welcome">Welcome to the amazing community of engineers in Chronostep Inc.</h6>
@@ -15,7 +15,7 @@
                             <a class="btn btn-lg btn-block btn-primary googleSignin py-auto" href="{{ route('auth.google') }}?method=login">
                                 <i class="fab fa-google me-2"></i> Continue with google</a>
                         </div>
-                        <h6 class="mb-4 text-light">Have a password? Continue with your email address</h6>
+                        <h6 class="mb-4 text-light"><span class="text-light me-4">━━</span>Have a password? Continue with your email address<span class="text-light ms-4">━━</span></h6>
                         <form action="{{ route('login') }}" class="form" method="POST">
                             @csrf
                             <div class="form-outline mb-4">
@@ -52,5 +52,3 @@
         </div>
     </div>
 @endsection
-
-

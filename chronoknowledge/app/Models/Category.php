@@ -23,7 +23,6 @@ class Category extends Model
     public function scopeCategoryList($query)
     {
         return $query->latest()
-            // ->get();
-            ->paginate(10);
+            ->get();
     }
 }

@@ -25,7 +25,7 @@ class PasswordResetController extends Controller
             $request->only('email')
         );
 
-        return back()->with('success', __('messages.success.send_mail'));
+        return back()->with('success', trans('messages.success.send_mail'));
     }
 
     public function sendResetLink($token)
@@ -48,8 +48,6 @@ class PasswordResetController extends Controller
             }
         );
 
-        return $status === Password::PASSWORD_RESET
-            ? redirect()->route('login')->with('status', __($status))
-            : back()->withErrors(['email' => [__($status)]]);
+        return back()->with('success', trans('messages.success.reset_password'));
     }
 }

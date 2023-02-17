@@ -6,18 +6,20 @@
         <div class="list-group list-group-flush mx-3 mt-4 bg-transparent py-4">
           <a
             href="{{ route('admin.dashboard') }}"
-            class="list-group-item list-group-item-action py-2 ripple active"
+            class="list-group-item list-group-item-action py-2 ripple {{ last(explode('/', request()->url())) == 'admin' ? 'active' : '' }}"
             aria-current="true"
           >
             <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Dashboard</span>
           </a>
-          <a href="{{ route('admin.tags.index') }}" class="list-group-item list-group-item-action py-2 ripple">
+          <a href="{{ route('admin.posts') }}" class="list-group-item list-group-item-action py-2 ripple {{ str_contains(request()->url(), 'posts') ? 'active' : '' }}">
+            <i class="fas fa-chart-bar fa-fw me-3"></i><span>Manage Posts</span></a>
+          <a href="{{ route('admin.tags.index') }}" class="list-group-item list-group-item-action py-2 ripple {{ str_contains(request()->url(), 'tags') ? 'active' : '' }}">
             <i class="fas fa-chart-bar fa-fw me-3"></i><span>Tags</span></a>
-          <a href="{{ route('admin.categories.index') }}" class="list-group-item list-group-item-action py-2 ripple"
+          <a href="{{ route('admin.categories.index') }}" class="list-group-item list-group-item-action py-2 ripple {{ str_contains(request()->url(), 'categories') ? 'active' : '' }}"
             ><i class="fas fa-globe fa-fw me-3"></i><span>Categories</span></a>
             <form method="POST" action="{{ route('logout') }}">
             @csrf
-            <button type="submit" class="list-group-item list-group-item-action py-2 ripple"
+            <button type="submit" class="text-danger list-group-item list-group-item-action py-2 ripple"
             ><i class="fas fa-money-bill fa-fw me-3"></i>Logout</button>
           </form>
         </div>
@@ -25,5 +27,3 @@
     </nav>
     <!-- Sidebar -->
   </header>
-
-

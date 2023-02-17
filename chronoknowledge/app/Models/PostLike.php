@@ -63,6 +63,10 @@ class PostLike extends Model
 
      /**
      * List all likes by year
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     *
+     * @return void
      */
     public function scopeLikesByYearList($query, $year)
     {

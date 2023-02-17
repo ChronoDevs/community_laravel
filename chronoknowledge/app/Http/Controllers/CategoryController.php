@@ -7,16 +7,19 @@ use App\Http\Services\CategoryService;
 use App\Http\Requests\CategoryRequest;
 use App\Components\ResponseComponent;
 use App\Models\Category;
+use App\Models\Notification;
 
 class CategoryController extends Controller
 {
     private $categoryService;
     private $response;
+    private $notification;
 
     public function __construct(CategoryService $categoryService, ResponseComponent $response)
     {
         $this->categoryService = $categoryService;
         $this->response = $response;
+        $this->notification = app(Notification::class);
     }
 
     /**
@@ -25,8 +28,9 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = $this->categoryService->index();
+        $notifications = $this->notification->getNotifsByUser();
 
-        return view('admin.categories.index', compact('categories'));
+        return view('admin.categories.index', compact('categories', 'notifications'));
     }
 
     /**
@@ -34,7 +38,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.categories.create');
+        $notifications = $this->notification->getNotifsByUser();
+
+        return view('admin.categories.create', compact('notifications'));
     }
 
     /**
@@ -44,7 +50,9 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return view('admin.categories.edit', compact('category'));
+        $notifications = $this->notification->getNotifsByUser();
+
+        return view('admin.categories.edit', compact('category', 'notifications'));
     }
 
     /**

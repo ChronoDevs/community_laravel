@@ -1,17 +1,17 @@
 @extends('layouts.app')
 @section('content')
-    <div class="container py-5 h-100 mt-0" style="color: white">
+    <div class="container py-2 h-100">
         <div class="row d-flex justify-content-center align-items-center">
             <div class="col-lg-8 col-xl-6">
                 <div class="card rounded-3">
-                    <div class="card-body p-2 p-md-5 mt-0">
-                        <h3>Create new post </h3>
+                    <div class="card-body p-2 p-md-5">
+                        <h3 class="text-light text-center">Create New Post</h3>
                         <form class="px-md-2" action="{{ route('posts.store') }}" method="POST">
                             @csrf
                             <input type="hidden" name="user_id" value="{{ auth()->id() }}">
                             <div class="form-outline mb-1">
-                                <label class="form-label float-left" for="category">Category</label>
-                                <select class="select form-control form-control-lg" name="category">
+                                <label class="form-label float-left text-light" for="category">Category</label>
+                                <select class="select form-control form-control-lg input-dark" name="category">
                                     <option value="" selected>Select Category</option>
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}"
@@ -24,17 +24,16 @@
                                 @enderror
                             </div>
                             <div class="form-outline mb-1">
-                                <label class="form-label float-left" for="title">Title</label>
-                                <input type="text" id="title" class="form-control form-control-lg"
+                                <label class="form-label float-left text-light" for="title">Title</label>
+                                <input type="text" id="title" class="form-control form-control-lg input-dark"
                                     value="{{ old('title') }}" name="title" placeholder="Title" />
                             </div>
                             @error('title')
                                 <span class="text text-danger mb-1">{{ $message }}</span>
                             @enderror
-                            <label class="form-label float-left" for="title">Description</label><br>
+                            <label class="form-label float-left text-light" for="title">Description</label><br>
                             <div class="form-outline mb-1">
-
-                                <textarea class="description" name="description" onkeyup="console.log(this)">
+                                <textarea class="description text-light" name="description" style="color:white!important">
                                     {!! old('description') !!}
                                 </textarea>
                             </div>
@@ -42,8 +41,8 @@
                                 <span class="text text-danger mb-1">{{ $message }}</span>
                             @enderror
                             <div class="form-outline mb-1 mt-2">
-                                <label class="form-label float-left" for="gender">Tags</label>
-                                <textarea name='tag' class='textarea countries form-control form-control-lg'
+                                <label class="form-label float-left text-light" for="gender">Tags</label>
+                                <textarea name='tag' class='textarea countries form-control form-control-lg input-dark border-none'
                                     placeholder="Try to add tags from the list">{{ old('tag') }}</textarea>
                             </div>
                             <button class="btn btn-primary btn-lg w-100 mt-4" type="submit">Continue</button>
