@@ -8,6 +8,7 @@ use App\Models\Post;
 use Illuminate\Support\Facades\DB;
 use App\Http\Interfaces\PostFavoriteInterface;
 use App\Components\ResponseComponent;
+use Throwable;
 
 class PostFavoriteService implements PostFavoriteInterface
 {
@@ -53,6 +54,7 @@ class PostFavoriteService implements PostFavoriteInterface
 
     public function create($request)
     {
+        DB::beginTransaction();
         try {
             $postFavorite = PostFavorite::create([
                 'user_id' => $request['user_id'],
@@ -70,8 +72,11 @@ class PostFavoriteService implements PostFavoriteInterface
                 $this->notification->createNotif($data);
             }
 
+            DB::commit();
             return $this->response->succeed('favorite', 'create');
         } catch (Throwable $e) {
+            DB::rollBack();
+
             return $this->response->fail('favorite', 'create');
         }
     }

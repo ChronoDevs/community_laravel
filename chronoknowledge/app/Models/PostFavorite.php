@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PostFavorite extends Model
@@ -43,6 +44,17 @@ class PostFavorite extends Model
         return $this->belongsTo(User::class);
     }
 
+     /**
+     * Relationship to logged in user
+     *
+     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function userLogged()
+    {
+        return $this->belongsTo(User::class)
+            ->where('user_id', auth()->id());
+    }
+
     /**
      * List all favorites by year
      */
@@ -62,7 +74,8 @@ class PostFavorite extends Model
      *
      * @return void
      */
-    public function scopeGetPost($query) {
+    public function scopeGetPost($query)
+    {
         return $query->with('post', 'user')->get();
     }
 }

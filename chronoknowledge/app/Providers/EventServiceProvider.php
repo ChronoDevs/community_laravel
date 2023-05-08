@@ -1,7 +1,7 @@
 <?php
-
 namespace App\Providers;
 
+use App\Events\SendNotification;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -25,9 +25,9 @@ class EventServiceProvider extends ServiceProvider
         // NotificationSending::class => [
         //     CheckNotificationStatus::class,
         // ],
-        // NotificationSent::class => [
-        //     LogNotification::class,
-        // ],
+        SendNotification::class => [
+            LogNotification::class,
+        ],
 
     ];
 
@@ -38,7 +38,7 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        NotificationSent::class;
     }
 
     /**

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
-use Illuminate\Validation\Rules\File;
+use Illuminate\Validation\Rules\File;//file validation for future usage
 
 class UserRequest extends FormRequest
 {
@@ -44,6 +44,9 @@ class UserRequest extends FormRequest
                 ->symbols()
                 ->uncompromised(),'confirmed'],
             'password_confirmation' => ['bail', 'required'],
+            /**
+             * Reserved for future use
+             */
             // 'job_title' => ['bail', 'required', 'string'],
             // 'profile' => ['bail', 'nullable', File::image()
             //     ->min(5)

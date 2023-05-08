@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Http\Interfaces\CategoryInterface;
 use App\Components\ResponseComponent;
 use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class CategoryService implements CategoryInterface
 {

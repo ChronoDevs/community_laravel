@@ -1,9 +1,9 @@
 <?php
-
 namespace App\Listeners;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use App\Events\SendNotification;
 use Illuminate\Notifications\Events\NotificationSent;
 
 class LogNotification
@@ -21,15 +21,17 @@ class LogNotification
     /**
      * Handle the event.
      *
-     * @param  \Illuminate\Notifications\Events\NotificationSent  $event
+     * @param  App\Events\SendNotification  $event
+     *
      * @return void
      */
-    public function handle(NotificationSent $event)
+    public function handle(SendNotification $event)
     {
-        // $event->channel
-        // $event->notifiable
-        // $event->notification
-        // $event->response
+        // $event->channel;
+        // $event->notifiable;
+        // $event->notification;
+        // $event->response;
+
         return true;
     }
 }

@@ -1,23 +1,26 @@
 <?php
-
 namespace App\Http\Services;
 
-use App\Models\PostLike;
-use App\Models\Notification;
-use Illuminate\Support\Facades\DB;
+use App\Models\{PostLike, Notification};
+use Illuminate\Support\Facades\{DB, Log, Cache};
 use App\Components\ResponseComponent;
+use App\Http\Repositories\NotificationRepository;
+use Illuminate\Contracts\Cache\LockTimeoutException;
+use Throwable;
 
 class PostLikeService
 {
     private $response;
     private $postLike;
     private $notification;
+    private $notifRepository;
 
-    public function __construct(ResponseComponent $response)
+    public function __construct(ResponseComponent $response, NotificationRepository $nofifRepository)
     {
         $this->response = $response;
         $this->postLike = app(PostLike::class);
         $this->notification = app(Notification::class);
+        $this->notifRepository = $nofifRepository;
     }
 
     public function index() {
@@ -30,24 +33,41 @@ class PostLikeService
 
     public function create($request)
     {
+        DB::beginTransaction();
         try {
-            $postLike = PostLike::create([
-                'user_id' => $request['user_id'],
-                'post_id' => $request['post_id'],
-            ]);
+            $lock = Cache::lock('like', 10);
+
+            try {
+                $lock->block(5);
+                $postLike = PostLike::create([
+                    'user_id' => $request['user_id'],
+                    'post_id' => $request['post_id'],
+                ]);
+                // Lock acquired after waiting a maximum of 5 seconds...
+            } catch (LockTimeoutException $e) {
+                Log::error($e);
+                // Unable to acquire lock...
+            } finally {
+                $lock?->release();
+            }
 
             if ($postLike) {
                 $data = [
-                    'user_id' => $postLike->user_id,
-                    'receiver_id' => $postLike->post->user_id,
-                    'post_id' => $postLike->post_id,
+                    'user_id' => $postLike->user,
+                    'receiver_id' => $postLike->post->user,
+                    'post_id' => $postLike->post,
                     'notification_type' => 'liked'
                 ];
 
-                $this->notification->createNotif($data);
+                $this->notifRepository->createNotif($data);
             }
+            DB::commit();
+
             return $this->response->succeed('post', 'create');
         } catch (Throwable $e) {
+            DB::rollback();
+            Log::error($e);
+
             return $this->response->fail('post', 'create');
         }
     }
@@ -63,9 +83,10 @@ class PostLikeService
     public function destroy($post_id, $user_id)
     {
         try {
-            $postLike = PostLike::where('user_id', $user_id)
+            PostLike::where('user_id', $user_id)
                 ->where('post_id', $post_id)
                 ->whereNull('deleted_at')
+                ->lockForUpdate()
                 ->first()
                 ->delete();
 

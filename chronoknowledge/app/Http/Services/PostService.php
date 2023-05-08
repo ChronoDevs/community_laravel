@@ -2,12 +2,12 @@
 
 namespace App\Http\Services;
 
-use App\Models\Post;
-use App\Models\PostTag;
-use Illuminate\Support\Facades\DB;
+use App\Models\{Post, PostTag};
+use Illuminate\Support\Facades\{DB, Log};
 use App\Enums\PostStatus;
 use App\Notifications\PostNotification;
 use App\Components\ResponseComponent;
+use Throwable;
 
 class PostService
 {
@@ -48,11 +48,13 @@ class PostService
         return $posts->postList(10);
     }
 
-    public function countPosts() {
+    public function countPosts()
+    {
         return $this->post->latest()->count();
     }
 
-    public function countActivePosts() {
+    public function countActivePosts()
+    {
         return $this->post->postActiveList()->count();
     }
 
@@ -82,6 +84,7 @@ class PostService
 
     public function create($request, $user)
     {
+        DB::beginTransaction();
         try {
             $post = Post::create([
                 'user_id' => $request['user_id'],
@@ -94,9 +97,12 @@ class PostService
             $postTag = $this->postTag->savePostTag($request, $post->id);
 
             $notif = $user->notify(new PostNotification($user, $post));
+            DB::commit();
 
             return $this->response->succeed('post', 'create', 'home');
         } catch (Throwable $e) {
+            DB::rollBack();
+            Log::error($e);
 
             return $this->response->fail('post', 'create', 'home');
         }
@@ -104,6 +110,7 @@ class PostService
 
     public function edit($request, $post)
     {
+        DB::beginTransaction();
         try {
             $post->update([
                 'category_id' => $request['category'],
@@ -114,12 +121,15 @@ class PostService
             ]);
 
             $postTag = $this->postTag->savePostTag($request, $post->id);
+            DB::commit();
 
             return $this->response->succeed('post', 'edit', 'home');
         } catch (Throwable $e) {
+            DB::rollBack();
+            Log::error($e);
+
             return $this->response->fail('post', 'edit', 'home');
         }
-
     }
 
     public function adminEdit($request, $post)
@@ -131,9 +141,10 @@ class PostService
 
             return $post;
         } catch (Throwable $e) {
+            Log::error($e);
+
             return $e;
         }
-
     }
 
     public function destroy(Post $post)
@@ -143,6 +154,8 @@ class PostService
 
             return $this->response->succeed('post', 'delete', 'home');
         } catch (Throwable $e) {
+            Log::error($e);
+
             return $this->response->fail('post', 'delete', 'home');
         }
     }

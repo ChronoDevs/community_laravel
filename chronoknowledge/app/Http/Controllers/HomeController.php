@@ -10,7 +10,9 @@ use App\Http\Services\PostLikeService;
 use App\Http\Services\PostFavoriteService;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
+use App\Models\User;
 use App\Models\Notification;
+use App\Events\NotificationSent;
 use Throwable;
 
 class HomeController extends Controller
@@ -35,9 +37,13 @@ class HomeController extends Controller
      * @param App\Http\Services\PostFavoriteService $postFavoriteService
      * @param App\Http\Services\PostLikeService $postLikeService
      */
-    public function __construct(PostService $postService, TagService $tagService, CategoryService $categoryService,
-        PostFavoriteService $postFavoriteService, PostLikeService $postLikeService)
-    {
+    public function __construct(
+        PostService $postService,
+        TagService $tagService,
+        CategoryService $categoryService,
+        PostFavoriteService $postFavoriteService,
+        PostLikeService $postLikeService
+    ) {
         $this->postService = $postService;
         $this->tagService = $tagService;
         $this->categoryService = $categoryService;
@@ -61,7 +67,7 @@ class HomeController extends Controller
         $notifications = $this->notification->getNotifsByUser();
         $count = $this->postService->countPosts();
 
-        return view($view, compact ('posts', 'keyword', 'tags', 'categories', 'notifications', 'count'));
+        return view($view, compact('posts', 'keyword', 'tags', 'categories', 'notifications', 'count'));
     }
 
     /**
@@ -77,7 +83,7 @@ class HomeController extends Controller
         $notifications = $this->notification->getNotifsByUser();
         $count = $this->postService->countActivePosts();
 
-        return view('listing.index', compact ('posts', 'tags', 'categories', 'notifications', 'count'));
+        return view('listing.index', compact('posts', 'tags', 'categories', 'notifications', 'count'));
     }
 
     /**
@@ -109,6 +115,15 @@ class HomeController extends Controller
         $postsByYear = $this->postService->getPostByYear();
         $notifications = $this->notification->getNotifsByUser();
 
-        return view('admin.index', compact('categories', 'posts', 'tags', 'likes', 'favorites', 'postsByMonth', 'postsByYear', 'notifications'));
+        return view('admin.index', compact(
+            'categories',
+            'posts',
+            'tags',
+            'likes',
+            'favorites',
+            'postsByMonth',
+            'postsByYear',
+            'notifications'
+        ));
     }
 }

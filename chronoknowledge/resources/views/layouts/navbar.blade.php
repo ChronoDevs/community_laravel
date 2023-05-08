@@ -8,14 +8,17 @@
       <div class="collapse navbar-collapse ms-3" id="navbarSupportedContent">
         <ul class="navbar-nav search me-auto mb-2" >
           <li class="nav-item">
-            <form action="{{ auth()->check() && auth()->user()->role_id == 1 ? route('admin.search') :  route('posts.search') }}" class="input-group w-auto my-auto d-sm-flex d-xs-flex ms-2 me-auto"
-                    method="POST">
-                    @csrf
-                    @method('POST')
-                    <input autocomplete="off" type="search" class="form-control form-control-lg rounded search input-dark "
-                        placeholder="Search" style="width: 20vw;" name="search"
-                        value="{{ old('search') ?? isset($keyword) ? $keyword : '' }}"  @if(auth()->check() && auth()->user()->role_id == 1) disabled @endif />
-                </form>
+            <form action="{{ auth()->check() && auth()->user()->role_id == 1
+                ? route('admin.search')
+                :  route('posts.search') }}" class="input-group w-auto my-auto d-sm-flex d-xs-flex ms-2 me-auto"
+                method="POST">
+                @csrf
+                @method('POST')
+                <input autocomplete="off" type="search" class="form-control form-control-lg rounded search input-dark "
+                    placeholder="Search" style="width: 20vw;" name="search"
+                    value="{{ old('search') ?? isset($keyword) ? $keyword : '' }}"
+                    @if(auth()->check() && auth()->user()->role_id == 1) disabled @endif />
+            </form>
           </li>
         </ul>
         <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-auto me-5">
@@ -51,7 +54,7 @@
                 @forelse ($notifications as $notification)
                 <li class="dropdown-item text-wrap">
                     <a class="text-decoration-none text-info" href="{{ route('posts.show', $notification->post_id) }}">
-                    {{ $notification->user->name . ' ' . $notification->notification_type . ' your post "' . $notification->post->title . '".'}}
+                        {{ $notification->user->name . ' ' . $notification->notification_type . ' your post "' . $notification->post->title . '".'}}
                     </a>
                 </li>
                 @empty

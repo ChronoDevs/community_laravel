@@ -196,7 +196,8 @@
 @push('scripts')
 <script type="text/javascript">
     const count = <?= json_encode($count) ?>;
-    const postCount = <?= json_encode($posts->count()) ?>;
+    //const count = @json($count)
+    // const postCount = <?= json_encode($posts->count()) ?>;
 
     $(document).ready(function() {
         $('.deletePost').click(function() {
@@ -216,27 +217,27 @@
         });
 
         //reserved for infinite loading via scroll
-        window.onscroll = function() {
-            if (window.innerHeight + window.pageYOffset >= document.body.offsetHeight) {
-                if (postCount < count ) {
-                    let paginate = Math.ceil(postCount / 10)+ 1;
-                    // if (window.location.href.includes('?') && !window.location.href.includes('pagination')) {
-                    //     console.log(true)
-                    //     window.location.replace(window.location.href + '&pagination=' + (paginate * 10))
-                    //     return;
-                    // }
+        // window.onscroll = function() {
+        //     if (window.innerHeight + window.pageYOffset >= document.body.offsetHeight) {
+        //         if (postCount < count ) {
+        //             let paginate = Math.ceil(postCount / 10)+ 1;
+        //             // if (window.location.href.includes('?') && !window.location.href.includes('pagination')) {
+        //             //     console.log(true)
+        //             //     window.location.replace(window.location.href + '&pagination=' + (paginate * 10))
+        //             //     return;
+        //             // }
 
-                    // if (window.location.href.includes('?') && !window.location.href.includes('pagination')) {
+        //             // if (window.location.href.includes('?') && !window.location.href.includes('pagination')) {
 
-                    //     // window.location.replace(window.location.href.replace() + '&pagination=' + (paginate * 10))
-                    // }
+        //             //     // window.location.replace(window.location.href.replace() + '&pagination=' + (paginate * 10))
+        //             // }
 
-                    // window.location.replace('?pagination=' + (paginate * 10))
-                } else {
-                    $('#stopPaginate').show();
-                }
-            }
-        }
+        //             // window.location.replace('?pagination=' + (paginate * 10))
+        //         } else {
+        //             $('#stopPaginate').show();
+        //         }
+        //     }
+        // }
     })
 </script>
 @endpush

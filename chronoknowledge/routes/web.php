@@ -34,6 +34,8 @@ Route::group(['middleware' => 'guest'], function () {
     Route::post('/reset-password', [PasswordResetController::class, 'update'])->name('password.update');
     Route::get('/google-login', [LoginController::class, 'redirectToGoogle'])->name('auth.google');
     Route::get('/auth/google/callback', [LoginController::class, 'loginWithGoogle'])->name('login.google-callback');
+    Route::get('/facebook-login', [LoginController::class, 'redirectToFacebook'])->name('auth.facebook');
+    Route::get('/auth/facebook/callback', [LoginController::class, 'loginWithFacebook'])->name('login.facebook-callback');
     Route::get('/', [HomeController::class, 'index'])->name('index');
 });
 

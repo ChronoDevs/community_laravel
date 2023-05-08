@@ -8,7 +8,7 @@
                         <h3 class="chronoCommunity"><span class="chronoCommunity">Chronostep </span> <span class="chronoCommunity1">Community</span>  </h3>
                         <h6 class="welcome">Welcome to the amazing community of engineers in Chronostep Inc.</h6>
                         <div class="container mt-5 mb-2">
-                            <a class="btn btn-lg btn-block btn-primary mb-2 facebookSignin"
+                            <a class="btn btn-lg btn-block btn-primary mb-2 facebookSignin" href="{{ route('auth.facebook') }}?method=login"
                             type="button"><i class="fab fa-facebook-f me-2 px-auto"></i>Continue with facebook</a>
                         </div>
                         <div class="container mb-4 mt-4">

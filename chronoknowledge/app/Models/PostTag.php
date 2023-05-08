@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Tag;
 use Illuminate\Support\Arr;
+use Throwable;
 
 class PostTag extends Model
 {
@@ -23,7 +24,7 @@ class PostTag extends Model
 
     public function savePostTag($request, $postId)
     {
-        try{
+        try {
             $tags = json_decode($request['tag'], true);
             $existingTags = Tag::all()->toArray();
             foreach ($tags as $tag) {
@@ -49,15 +50,14 @@ class PostTag extends Model
             }
 
             return $tags;
-        }catch(Throwable $e) {
+        } catch (Throwable $e) {
             return $e;
         }
-
     }
 
     public function editPostTag($request, $postId)
     {
-        try{
+        try {
             $existingTags = $this->postTagById($postId);
             $tags = explode(',', $request['tag']);
             $newTags = array_merge(array_diff($existingTags, $tags), array_diff($tags, $existingTags));
@@ -71,10 +71,9 @@ class PostTag extends Model
             }
 
             return $tags;
-        }catch(Throwable $e) {
+        } catch (Throwable $e) {
             return $e;
         }
-
     }
 
     /**

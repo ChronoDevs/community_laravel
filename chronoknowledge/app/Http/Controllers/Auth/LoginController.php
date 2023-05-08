@@ -11,9 +11,12 @@ use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\LinkedSocialAccount;
 use App\Models\User;
+use App\Http\Controllers\Auth\Traits\FacebookLogin;
 
 class LoginController extends Controller
 {
+    use FacebookLogin;
+
     private $user;
     private $socialAccount;
 

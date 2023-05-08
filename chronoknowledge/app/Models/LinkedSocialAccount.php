@@ -29,7 +29,8 @@ class LinkedSocialAccount extends Model
      * @param App\Models\User $user
      * @param mixed $googleUser
      */
-    public function store($user, $googleUser) {
+    public function store($user, $googleUser)
+    {
         return $this->updateOrCreate([
             'user_id' => $user->id,
             'provider_id' => $googleUser->id,

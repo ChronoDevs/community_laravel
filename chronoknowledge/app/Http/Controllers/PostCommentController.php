@@ -32,7 +32,6 @@ class PostCommentController extends Controller
      */
     public function store(PostCommentRequest $request)
     {
-        // return dd($request->user());
         $user = $request->user();
         $request = $request->validated();
         $comment = $this->postCommentService->create($request, $user);
@@ -53,7 +52,6 @@ class PostCommentController extends Controller
         $comment = $this->postCommentService->edit($comment, $request);
 
         return response()->json($comment['status'], $comment['code']);
-
     }
 
     /**

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class PostLike extends Model
 {
@@ -55,6 +56,8 @@ class PostLike extends Model
 
     /**
      * Scope function to return likes
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
      */
     public function scopePostLikesList($query)
     {

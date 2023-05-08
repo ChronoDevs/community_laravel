@@ -75,7 +75,9 @@ class User extends Authenticatable
                 'password' => Hash::make($data['password']),
                 'name' => $this->setName($data['first_name'], $data['middle_name'], $data['last_name']),
                 'nick_name' => $data['nick_name'],
-                'birth_date' => $data['date_of_birth'] ? Carbon::createFromFormat('Y-m-d', $this->formatDate($data['date_of_birth'])) : null,
+                'birth_date' => $data['date_of_birth']
+                    ? Carbon::createFromFormat('Y-m-d', $this->formatDate($data['date_of_birth']))
+                    : null,
                 'gender' => $data['gender'],
                 'zip_code' => $data['zip_code'],
                 'address' => $data['address'],
@@ -116,6 +118,7 @@ class User extends Authenticatable
 
     /**
      * Sets the user name
+     * for improvement use mutators
      */
     public function setName($firstName, $middleName, $lastName)
     {

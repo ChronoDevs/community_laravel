@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Events\SendNotification;
 use App\Models\User;
 use App\Models\Post;
 
@@ -46,32 +47,16 @@ class Notification extends Model
     }
 
     /**
-     * Store new notification in the database
-     *
-     * @param mixed<string, integer> $request
-     *
-     * @return App\Models\Notifications
-     */
-    public function createNotif($request) {
-       return  $this->create([
-            'user_id' => $request['user_id'],
-            'receiver_id' => $request['receiver_id'],
-            'post_id' => $request['post_id'],
-            'notification_type' => $request['notification_type']
-       ]);
-    }
-
-    /**
      * List all notifications
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      *
      * @return void
      */
-    public function scropeGetNotifs($query) {
+    public function scopeGetNotifs($query)
+    {
         return $query->all();
     }
-
 
     /**
      * List all notifications by user
@@ -80,7 +65,8 @@ class Notification extends Model
      *
      * @return void
      */
-    public function scopeGetNotifsByUser($query) {
+    public function scopeGetNotifsByUser($query)
+    {
         return $query->where('receiver_id', auth()->id())
             ->get();
     }

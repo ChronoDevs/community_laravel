@@ -121,7 +121,7 @@ class Post extends Model
      */
     public function scopeRelationship($query)
     {
-        return $query->with(['user','likes', 'comments', 'favorites']);
+        return $query->with(['user','likes', 'comments', 'favorites', 'tags']);
     }
 
     /**
@@ -129,7 +129,7 @@ class Post extends Model
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return void
      */
-    public function scopePostList($query, $pagination=10)
+    public function scopePostList($query, $pagination = 10)
     {
         return $query
             ->paginate($pagination);
@@ -188,7 +188,9 @@ class Post extends Model
     public function scopePostByYearList($query)
     {
         return $query->with(['user', 'likes', 'comments', 'favorites'])
-            ->select('posts.*', 'posts.id as postId', DB::raw('YEAR(posts.created_at) as year, MONTH(posts.created_at) as month'))
+            ->select('posts.*', 'posts.id as postId', DB::raw(
+                'YEAR(posts.created_at) as year, MONTH(posts.created_at) as month'
+            ))
             // ->whereYear('created_at', $year)
             ->orderBy('year', 'desc')
             ->get();
@@ -218,8 +220,8 @@ class Post extends Model
     public function scopePostFilterByCategory($query, $keyword)
     {
         return $query->join('categories as c', function ($join) {
-                $join->on('posts.category_id', '=', 'c.id');
-            })
+            $join->on('posts.category_id', '=', 'c.id');
+        })
             ->where('c.title', 'LIKE', $keyword)
             ->join('post_tags as t', function ($join) {
                 $join->on('posts.id', '=', 't.post_id');
@@ -240,8 +242,8 @@ class Post extends Model
     public function scopePostFilterByTag($query, $keyword)
     {
         return $query->join('post_tags as t', function ($join) {
-                $join->on('posts.id', '=', 't.post_id');
-            })
+            $join->on('posts.id', '=', 't.post_id');
+        })
             ->where('t.description', $keyword);
             // ->orderBy('posts.id', 'desc');
     }

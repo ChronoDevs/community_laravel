@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Providers;
 
 use Illuminate\Support\Facades\Gate;
@@ -11,7 +10,7 @@ use App\Models\Tag;
 use App\Policies\PostPolicy;
 use App\Policies\PostLikePolicy;
 use App\Policies\PostCommentPolicy;
-use App\Policies\TagPolicy;
+use App\Policies\{TagPolicy, PostFavoritePolicy};
 
 class AuthServiceProvider extends ServiceProvider
 {

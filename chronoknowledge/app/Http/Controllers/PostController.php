@@ -33,7 +33,11 @@ class PostController extends Controller
      * @param App\Http\Services\PostService $postService
      * @param App\Http\Services\CategoryService $categoryService
      */
-    public function __construct(PostService $postService, CategoryService $categoryService, ResponseComponent $response, TagService $tagService)
+    public function __construct(
+        PostService $postService,
+        CategoryService $categoryService,
+        ResponseComponent $response,
+        TagService $tagService)
     {
         $this->postService = $postService;
         $this->categoryService = $categoryService;
@@ -120,7 +124,6 @@ class PostController extends Controller
         $post = $this->postService->edit($request, $post);
 
         return $this->response->formatView($post);
-
     }
 
      /**
@@ -128,23 +131,23 @@ class PostController extends Controller
      *
      * @param App\Models\Post $post
      * @param Illuminate\Http\Request $request
+     *
+     * @return Illuminate\Http\JsonResponse
      */
     public function updateViaAdmin(Post $post, Request $request)
     {
         $post = $this->postService->adminEdit($request, $post);
 
         return response()->json([$post], 200);
-
     }
     /**
      * Delete a post
      *
      * @param \App\Models\Post $post
-     * @param \Illuminate\Http\Request $request
      *
      * @return mixed|string
      */
-    public function destroy(Post $post, Request $request)
+    public function destroy(Post $post)
     {
         $post = $this->postService->destroy($post);
 
