@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Services\TagService;
-use App\Models\Tag;
-use App\Models\Notification;
 use App\Components\ResponseComponent;
 use App\Http\Requests\TagRequest;
+use App\Http\Services\TagService;
+use App\Models\Notification;
+use App\Models\Tag;
 
 class TagController extends Controller
 {
     private $tagService;
+
     private $response;
+
     private $notification;
 
     public function __construct(TagService $tagService, ResponseComponent $response)
@@ -46,7 +47,7 @@ class TagController extends Controller
     /**
      * Returns modification of tags page
      *
-     * @param App\Models\Tag $tag
+     * @param  App\Models\Tag  $tag
      */
     public function edit(Tag $tag)
     {
@@ -58,7 +59,7 @@ class TagController extends Controller
     /**
      * Store a new tag data
      *
-     * @param App\Http\Requests\TagRequest $request
+     * @param  App\Http\Requests\TagRequest  $request
      */
     public function store(TagRequest $request)
     {
@@ -72,8 +73,8 @@ class TagController extends Controller
     /**
      * Update a tag data
      *
-     * @param App\Http\Requests\TagRequest $request
-     * @param App\Models\Tag $tag
+     * @param  App\Http\Requests\TagRequest  $request
+     * @param  App\Models\Tag  $tag
      */
     public function update(TagRequest $request, Tag $tag)
     {
@@ -87,7 +88,7 @@ class TagController extends Controller
     /**
      * Delete a tag data
      *
-     * @param App\Http\Requests\Tag $tag
+     * @param  App\Http\Requests\Tag  $tag
      */
     public function destroy(Tag $tag)
     {

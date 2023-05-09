@@ -2,36 +2,38 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Components\ResponseComponent;
 use App\Http\Requests\PostRequest;
-use Illuminate\Support\Facades\DB;
-use App\Http\Services\PostService;
 use App\Http\Services\CategoryService;
+use App\Http\Services\PostService;
 use App\Http\Services\TagService;
+use App\Models\Notification;
 use App\Models\Post;
 use App\Models\PostTag;
-use App\Models\Notification;
-use App\Components\ResponseComponent;
-use Throwable;
+use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
     /**
      * Global value for PostService and CategoryService
-     *
      */
     private $postService;
+
     private $categoryService;
+
     private $response;
+
     private $postTag;
+
     private $tagService;
+
     private $notification;
 
     /**
      * Initialize the PostService via constructor
      *
-     * @param App\Http\Services\PostService $postService
-     * @param App\Http\Services\CategoryService $categoryService
+     * @param  App\Http\Services\PostService  $postService
+     * @param  App\Http\Services\CategoryService  $categoryService
      */
     public function __construct(
         PostService $postService,
@@ -55,7 +57,7 @@ class PostController extends Controller
         $posts = $this->postService->admin($request);
         $notifications = $this->notification->getNotifsByUser();
 
-        return view('admin.posts.index', compact ('posts', 'notifications'));
+        return view('admin.posts.index', compact('posts', 'notifications'));
     }
 
     /**
@@ -73,7 +75,7 @@ class PostController extends Controller
     /**
      * Returns users post viewing page
      *
-     * @param App\Models\Post $post
+     * @param  App\Models\Post  $post
      */
     public function show(Post $post, Request $request)
     {
@@ -85,8 +87,8 @@ class PostController extends Controller
     /**
      * Returns post creation page
      *
-     * @param App\Models\Post $post
-     * @param Illuminate\Http\Request $request
+     * @param  App\Models\Post  $post
+     * @param  Illuminate\Http\Request  $request
      */
     public function edit(Post $post, Request $request)
     {
@@ -101,7 +103,7 @@ class PostController extends Controller
     /**
      * Store new post data
      *
-     * @param Illuminate\Http\Requests\PostRequest $request
+     * @param  Illuminate\Http\Requests\PostRequest  $request
      */
     public function store(PostRequest $request)
     {
@@ -115,8 +117,8 @@ class PostController extends Controller
     /**
      * Update post data
      *
-     * @param App\Models\Post $post
-     * @param Illuminate\Http\Requests\PostRequest $request
+     * @param  App\Models\Post  $post
+     * @param  Illuminate\Http\Requests\PostRequest  $request
      */
     public function update(Post $post, PostRequest $request)
     {
@@ -126,12 +128,11 @@ class PostController extends Controller
         return $this->response->formatView($post);
     }
 
-     /**
+    /**
      * Update post data via admin
      *
-     * @param App\Models\Post $post
-     * @param Illuminate\Http\Request $request
-     *
+     * @param  App\Models\Post  $post
+     * @param  Illuminate\Http\Request  $request
      * @return Illuminate\Http\JsonResponse
      */
     public function updateViaAdmin(Post $post, Request $request)
@@ -140,10 +141,10 @@ class PostController extends Controller
 
         return response()->json([$post], 200);
     }
+
     /**
      * Delete a post
      *
-     * @param \App\Models\Post $post
      *
      * @return mixed|string
      */

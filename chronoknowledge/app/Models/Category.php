@@ -17,7 +17,7 @@ class Category extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'title'
+        'title',
     ];
 
     public function scopeCategoryList($query)

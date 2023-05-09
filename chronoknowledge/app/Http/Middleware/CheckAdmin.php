@@ -2,16 +2,15 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Services\RoleService;
 use Closure;
 use Illuminate\Http\Request;
-use App\Http\Services\RoleService;
 
 class CheckAdmin
 {
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
@@ -25,7 +24,7 @@ class CheckAdmin
             abort(403, 'You do not have access to this resource.');
         } else {
             if (str_contains($request->getRequestUri(), '/user')
-                || !str_contains($request->getRequestUri(), '/user')) {
+                || ! str_contains($request->getRequestUri(), '/user')) {
                 if (RoleService::isUser()
                     || str_contains($request->getRequestUri(), '/logout')) {
                     return $next($request);
@@ -33,6 +32,6 @@ class CheckAdmin
 
                 abort(403, 'You do not have access to this resource.');
             }
-        };
+        }
     }
 }

@@ -13,10 +13,10 @@ return [
     'posts' => [
         'status' => [
             1 => 'Active',
-            2 => 'Inactive'
-        ]
+            2 => 'Inactive',
+        ],
     ],
     'register' => [
         'success' => 'Successfully registered your account!',
-    ]
+    ],
 ];

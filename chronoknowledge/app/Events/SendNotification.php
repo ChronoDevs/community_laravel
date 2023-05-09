@@ -2,15 +2,13 @@
 
 namespace App\Events;
 
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use App\Models\User;
-use App\Models\Post;
 
 class SendNotification implements ShouldBroadcast
 {
@@ -24,38 +22,39 @@ class SendNotification implements ShouldBroadcast
      * @var string
      */
     public $type;
+
     /**
      * User instance
      *
      * @var App\Models\User
      */
     public $user;
+
     /**
      * User instance
      *
      * @var App\Models\User
      */
     public $owner;
+
     /**
      * Post instance
-     *
      */
     public $post;
 
     /**
      * Create a new event instance.
      *
-     * @param User $user
-     * @param Post $post
-     * @param User $owner
-     * @param string $type
-     *
+     * @param  User  $user
+     * @param  Post  $post
+     * @param  User  $owner
+     * @param  string  $type
      */
-    public function __construct($user, $post, $owner,  $type)
+    public function __construct($user, $post, $owner, $type)
     {
-        $this->type  = $type;
-        $this->user  = $user;
-        $this->post  = $post;
+        $this->type = $type;
+        $this->user = $user;
+        $this->post = $post;
         $this->owner = $owner;
     }
 
@@ -86,6 +85,12 @@ class SendNotification implements ShouldBroadcast
      */
     public function broadcastWith()
     {
-        return ['title'=>'This notification is from Chronoknowledge'];
+        return [
+            'title' => 'This notification is from Chronoknowledge',
+            'type' => $this->type,
+            'user' => $this->user,
+            'post' => $this->post,
+            'owner' => $this->owner
+        ];
     }
 }

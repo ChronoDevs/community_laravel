@@ -2,17 +2,21 @@
 
 namespace App\Http\Services;
 
-use App\Models\{Post, PostTag};
-use Illuminate\Support\Facades\{DB, Log};
-use App\Enums\PostStatus;
-use App\Notifications\PostNotification;
 use App\Components\ResponseComponent;
+use App\Enums\PostStatus;
+use App\Models\Post;
+use App\Models\PostTag;
+use App\Notifications\PostNotification;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Throwable;
 
 class PostService
 {
     private $post;
+
     private $response;
+
     private $postTag;
 
     public function __construct(ResponseComponent $response)
@@ -36,13 +40,13 @@ class PostService
             return $posts->postFilterByTag($request->tag)->get();
         }
         if ($request->filter == 'relevant') {
-            return  $posts->relevantPost();
+            return $posts->relevantPost();
         }
         if ($request->filter == 'latest') {
             return $posts->latestPost()->get();
         }
         if ($request->filter == 'top') {
-            return  $posts->topPost()->get();
+            return $posts->topPost()->get();
         }
 
         return $posts->postList(10);
@@ -92,7 +96,7 @@ class PostService
                 'title' => $request['title'],
                 'plain_description' => strip_tags($request['description']),
                 'html_description' => $request['description'],
-                'status' => PostStatus::ACTIVE
+                'status' => PostStatus::ACTIVE,
             ]);
             $postTag = $this->postTag->savePostTag($request, $post->id);
 
@@ -117,7 +121,7 @@ class PostService
                 'title' => $request['title'],
                 'plain_description' => strip_tags($request['description']),
                 'html_description' => $request['description'],
-                'status' => PostStatus::ACTIVE
+                'status' => PostStatus::ACTIVE,
             ]);
 
             $postTag = $this->postTag->savePostTag($request, $post->id);
@@ -136,7 +140,7 @@ class PostService
     {
         try {
             $post = $post->update([
-                'status' => $request->status ? PostStatus::ACTIVE : PostStatus::INACTIVE
+                'status' => $request->status ? PostStatus::ACTIVE : PostStatus::INACTIVE,
             ]);
 
             return $post;

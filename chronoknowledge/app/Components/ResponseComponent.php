@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Components;
 
 use App\Http\Interfaces\ResponseInterface;
@@ -8,46 +9,43 @@ class ResponseComponent implements ResponseInterface
     /**
      * Returns success message
      *
-     * @param string $data
-     * @param string $type
-     *
+     * @param  string  $data
+     * @param  string  $type
      * @return array<string,integer>
      */
-    public function succeed($data, $type, $route='')
+    public function succeed($data, $type, $route = '')
     {
         return [
             'data' => $data,
             'type' => $type,
             'status' => 'success',
             'code' => 200,
-            'route' => $route
+            'route' => $route,
         ];
     }
 
     /**
      * Returns success message
      *
-     * @param string $data
-     * @param string $type
-     *
+     * @param  string  $data
+     * @param  string  $type
      * @return array<string,integer>
      */
-    public function fail($data, $type, $route='')
+    public function fail($data, $type, $route = '')
     {
         return [
             'data' => $data,
             'type' => $type,
             'status' => 'error',
             'code' => 500,
-            'route' => $route
+            'route' => $route,
         ];
     }
 
     /**
      * Formats response sent to the user ajax request
      *
-     * @param array<string> $data
-     *
+     * @param  array<string>  $data
      * @return Illuminate\Http\Response
      */
     public function format($data)
@@ -58,14 +56,13 @@ class ResponseComponent implements ResponseInterface
     /**
      * Formats response sent to the user view
      *
-     * @param array<string> $data
-     *
+     * @param  array<string>  $data
      * @return Illuminate\Http\Response
      */
     public function formatView($data)
     {
         return redirect()
             ->route($data['route'])
-            ->with($data['status'], trans('messages.' . $data['status'] . '.' . $data['type'], ['data' => $data['data']]));
+            ->with($data['status'], trans('messages.'.$data['status'].'.'.$data['type'], ['data' => $data['data']]));
     }
 }

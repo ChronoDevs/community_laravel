@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Services\RoleService;
+use Illuminate\Foundation\Http\FormRequest;
 
 class PostCommentRequest extends FormRequest
 {
@@ -27,7 +27,7 @@ class PostCommentRequest extends FormRequest
         return [
             'user_id' => ['bail', 'required', 'integer', 'exists:users,id'],
             'post_id' => ['bail', 'required', 'integer', 'exists:posts,id'],
-            'description' => ['bail', 'required', 'string']
+            'description' => ['bail', 'required', 'string'],
         ];
     }
 }

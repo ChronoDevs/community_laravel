@@ -79,4 +79,26 @@
         </ul>
       </div>
     </div>
-  </nav>
+</nav>
+<script>
+    window.laravel_echo_port = '{{ env('LARAVEL_ECHO_PORT') }}';
+</script>
+<script src="//{{ request()->getHost() }}:{{ env('LARAVEL_ECHO_PORT') }}/socket.io/socket.io.js"></script>
+<script src="{{ url('/js/laravel-echo.js') }}" type="text/javascript"></script>
+<script type="text/javascript">
+    var i = 0;
+    window.Echo.channel('laravel_database_user-channel')
+        .listen('.UserEvent', (data) => {
+            i++;
+            let id = <?= json_encode(auth()->id()); ?>;
+            if(id== data.owner.id)
+            $('.badge').text(+$('.badge').text() + 1);
+            $(".dropdown-menu").prepend(
+                `<li class="dropdown-item text-wrap">
+                    <a class="text-decoration-none text-info" href="{{ route('posts.show', $notification->post_id ?? '') }}">
+                        ${data.user.name} ${data.type} ${data.owner.name} 's post "${data.post.title}."'
+                    </a>
+                </li>`
+            );
+        });
+</script>

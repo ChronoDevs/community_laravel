@@ -2,9 +2,8 @@
 
 namespace App\Http\Repositories;
 
-use App\Models\Notification;
 use App\Events\SendNotification;
-use App\Http\Repositories\BaseRepository;
+use App\Models\Notification;
 
 class NotificationRepository extends BaseRepository
 {
@@ -26,15 +25,15 @@ class NotificationRepository extends BaseRepository
         event(new SendNotification(
             $request['user_id'],
             $request['post_id'],
-            $request['post_id']['user_id'],
-            'liked'
+            $request['receiver_id'],
+            $request['notification_type']
         ));
 
-        return  $this->notification->create([
+        return $this->notification->create([
             'user_id' => $request['user_id']['id'],
             'receiver_id' => $request['post_id']['user_id'],
             'post_id' => $request['post_id']['id'],
-            'notification_type' => $request['notification_type']
+            'notification_type' => $request['notification_type'],
         ]);
     }
 }

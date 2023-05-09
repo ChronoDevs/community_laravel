@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Tag;
 use Illuminate\Support\Arr;
 use Throwable;
 
@@ -19,7 +18,7 @@ class PostTag extends Model
      */
     protected $fillable = [
         'post_id',
-        'description'
+        'description',
     ];
 
     public function savePostTag($request, $postId)
@@ -44,7 +43,7 @@ class PostTag extends Model
                     // };
                     $postTag = $this->updateOrCreate([
                         'post_id' => $postId,
-                        'description' => $tag['value']
+                        'description' => $tag['value'],
                     ]);
                 }
             }
@@ -65,7 +64,7 @@ class PostTag extends Model
                 if ($tag) {
                     $postTag = $this->create([
                         'post_id' => $postId,
-                        'description' => $tag->value
+                        'description' => $tag->value,
                     ]);
                 }
             }
@@ -78,8 +77,6 @@ class PostTag extends Model
 
     /**
      * Returns list of post's tags
-     *
-     * @param
      */
     public function scopePostTagList($query)
     {

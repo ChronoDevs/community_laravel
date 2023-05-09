@@ -2,10 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
-use App\Enums\UserRole;
 use App\Http\Services\RoleService;
+use Illuminate\Foundation\Http\FormRequest;
 
 class PostRequest extends FormRequest
 {
@@ -32,7 +30,7 @@ class PostRequest extends FormRequest
             'title' => ['bail', 'required', 'string', 'max:100'],
             'description' => ['bail', 'required'],
             // 'html_description' => ['bail', 'required', 'string'],
-            'tag' => ['bail', 'required', 'string']
+            'tag' => ['bail', 'required', 'string'],
         ];
     }
 }

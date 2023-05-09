@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Facade;
-
 return [
 
     /*
@@ -219,5 +217,5 @@ return [
     /**
      * Slack route notification channel
      */
-    'slack_channel' => env('SLACK_CHANNEL')
+    'slack_channel' => env('SLACK_CHANNEL'),
 ];

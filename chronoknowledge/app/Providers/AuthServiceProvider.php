@@ -1,16 +1,16 @@
 <?php
+
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use App\Models\User;
 use App\Models\Post;
 use App\Models\PostComment;
 use App\Models\Tag;
-use App\Policies\PostPolicy;
-use App\Policies\PostLikePolicy;
 use App\Policies\PostCommentPolicy;
-use App\Policies\{TagPolicy, PostFavoritePolicy};
+use App\Policies\PostFavoritePolicy;
+use App\Policies\PostLikePolicy;
+use App\Policies\PostPolicy;
+use App\Policies\TagPolicy;
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
 {

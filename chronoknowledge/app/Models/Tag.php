@@ -19,7 +19,7 @@ class Tag extends Model
     protected $fillable = [
         'title',
         'plain_description',
-        'html_description'
+        'html_description',
     ];
 
     /**

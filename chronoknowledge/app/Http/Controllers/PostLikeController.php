@@ -2,23 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Services\PostLikeService;
 use App\Http\Requests\PostLikeRequest;
-use App\Models\PostLike;
+use App\Http\Services\PostLikeService;
+use Illuminate\Http\Request;
 
 class PostLikeController extends Controller
 {
     /**
      * Global value for PostLikeService
-     *
      */
     private $postLikeService;
 
     /**
      * Initialize the PostService via constructor
      *
-     * @param App\Http\Services\PostLikeService $postLikeService
+     * @param  App\Http\Services\PostLikeService  $postLikeService
      */
     public function __construct(PostLikeService $postLikeService)
     {
@@ -32,13 +30,13 @@ class PostLikeController extends Controller
     {
         $postLikes = $this->postLikeService->index();
 
-        return view('likes.index', compact ('$posts'));
+        return view('likes.index', compact('$posts'));
     }
 
     /**
      * Store new post data
      *
-     * @param Illuminate\Http\Requests\PostLikeRequest $request
+     * @param  Illuminate\Http\Requests\PostLikeRequest  $request
      */
     public function store(PostLikeRequest $request)
     {
@@ -52,7 +50,6 @@ class PostLikeController extends Controller
     /**
      * Delete a post
      *
-     * @param \Illuminate\Http\Request $request
      *
      * @return mixed|string
      */

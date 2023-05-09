@@ -2,23 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\PostCommentRequest;
 use App\Http\Services\PostCommentService;
 use App\Models\PostComment;
-use App\Http\Requests\PostCommentRequest;
+use Illuminate\Http\Request;
 
 class PostCommentController extends Controller
 {
     /**
      * Global value for PostCommentService
-     *
      */
     private $postCommentService;
 
     /**
      * Initialize the PostCommentService via constructor
      *
-     * @param App\Http\Services\PostCommentService $postCommentService
+     * @param  App\Http\Services\PostCommentService  $postCommentService
      */
     public function __construct(PostCommentService $postCommentService)
     {
@@ -28,7 +27,7 @@ class PostCommentController extends Controller
     /**
      * Store new post data
      *
-     * @param Illuminate\Http\Requests\PostCommentRequest $request
+     * @param  Illuminate\Http\Requests\PostCommentRequest  $request
      */
     public function store(PostCommentRequest $request)
     {
@@ -43,8 +42,8 @@ class PostCommentController extends Controller
     /**
      * Update post data
      *
-     * @param App\Models\PostComment $comment
-     * @param Illuminate\Http\Requests\PostCommentRequest $request
+     * @param  App\Models\PostComment  $comment
+     * @param  Illuminate\Http\Requests\PostCommentRequest  $request
      */
     public function update(PostComment $comment, PostCommentRequest $request)
     {
@@ -57,9 +56,7 @@ class PostCommentController extends Controller
     /**
      * Delete a post
      *
-     * @param \App\Models\PostComment $postComment
-     * @param \Illuminate\Http\Request $request
-     *
+     * @param  \App\Models\PostComment  $postComment
      * @return mixed|string
      */
     public function destroy(PostComment $comment, Request $request)

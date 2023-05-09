@@ -2,17 +2,18 @@
 
 namespace App\Http\Services;
 
-use App\Models\Tag;
-use App\Models\PostTag;
-use App\Http\Interfaces\TagInterface;
 use App\Components\ResponseComponent;
+use App\Http\Interfaces\TagInterface;
+use App\Models\PostTag;
+use App\Models\Tag;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Arr;
 
 class TagService implements TagInterface
 {
     private $tag;
+
     private $response;
+
     private $postTag;
 
     public function __construct(ResponseComponent $response)
@@ -27,7 +28,7 @@ class TagService implements TagInterface
         $tags = $this->postTag->postTagById($postId);
         $tags = $tags->map(function ($tag) {
             return [
-                'title' => $tag->description
+                'title' => $tag->description,
             ];
         })->toArray();
 
@@ -41,7 +42,7 @@ class TagService implements TagInterface
             return [
                 'title' => $tag->title,
                 'plain_description' => $tag->plain_description,
-                'html_description' => $tag->html_description
+                'html_description' => $tag->html_description,
             ];
         })->toArray();
 
@@ -62,7 +63,7 @@ class TagService implements TagInterface
                 $this->tag->updateOrCreate([
                     'title' => $request['title'],
                     'plain_description' => strip_tags($request['description']),
-                    'html_description' => $request['description']
+                    'html_description' => $request['description'],
                 ]);
             });
 
@@ -79,7 +80,7 @@ class TagService implements TagInterface
                 $tag->updateOrCreate([
                     'title' => $request['title'],
                     'plain_description' => strip_tags($request['description']),
-                    'html_description' => $request['description']
+                    'html_description' => $request['description'],
                 ]);
             });
 

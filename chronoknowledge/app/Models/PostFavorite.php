@@ -4,10 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Post;
-use App\Models\User;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class PostFavorite extends Model
 {
@@ -21,7 +19,7 @@ class PostFavorite extends Model
      */
     protected $fillable = [
         'user_id',
-        'post_id'
+        'post_id',
     ];
 
     /**
@@ -44,7 +42,7 @@ class PostFavorite extends Model
         return $this->belongsTo(User::class);
     }
 
-     /**
+    /**
      * Relationship to logged in user
      *
      * @return Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -71,7 +69,6 @@ class PostFavorite extends Model
      * List all likes by year
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
-     *
      * @return void
      */
     public function scopeGetPost($query)

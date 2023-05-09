@@ -2,40 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Services\CategoryService;
+use App\Http\Services\PostFavoriteService;
+use App\Http\Services\PostLikeService;
 use App\Http\Services\PostService;
 use App\Http\Services\TagService;
-use App\Http\Services\CategoryService;
-use App\Http\Services\PostLikeService;
-use App\Http\Services\PostFavoriteService;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Post;
-use App\Models\User;
 use App\Models\Notification;
-use App\Events\NotificationSent;
-use Throwable;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     /**
      * Global value for PostService
-     *
      */
     private $postService;
+
     private $tagService;
+
     private $categoryService;
+
     private $postFavoriteService;
+
     private $postLikeService;
+
     private $notification;
 
     /**
      * Initialize the PostService via constructor
      *
-     * @param App\Http\Services\PostService $postService
-     * @param App\Http\Services\TagService $tagService
-     * @param App\Http\Services\CategoryService $categoryService
-     * @param App\Http\Services\PostFavoriteService $postFavoriteService
-     * @param App\Http\Services\PostLikeService $postLikeService
+     * @param  App\Http\Services\PostService  $postService
+     * @param  App\Http\Services\TagService  $tagService
+     * @param  App\Http\Services\CategoryService  $categoryService
+     * @param  App\Http\Services\PostFavoriteService  $postFavoriteService
+     * @param  App\Http\Services\PostLikeService  $postLikeService
      */
     public function __construct(
         PostService $postService,
@@ -55,7 +54,7 @@ class HomeController extends Controller
     /**
      * Returns the lists of posts
      *
-     * @param Illuminate\Http\Request $request
+     * @param  Illuminate\Http\Request  $request
      */
     public function index(Request $request)
     {
@@ -73,7 +72,7 @@ class HomeController extends Controller
     /**
      * Returns the lists of active posts
      *
-     * @param Illuminate\Http\Request $request
+     * @param  Illuminate\Http\Request  $request
      */
     public function listing(Request $request)
     {
@@ -89,20 +88,20 @@ class HomeController extends Controller
     /**
      * Return static pages
      *
-     * @param Illuminate\Http\Request $request
+     * @param  Illuminate\Http\Request  $request
      */
     public function public(Request $request)
     {
         $view = last(explode('/', request()->url()));
         $notifications = $this->notification->getNotifsByUser();
 
-        return view($view . '.index', compact('notifications'));
+        return view($view.'.index', compact('notifications'));
     }
 
     /**
      * Returns admin dashboard
      *
-     * @param Illuminate\Http\Request $request
+     * @param  Illuminate\Http\Request  $request
      */
     public function admin(Request $request)
     {

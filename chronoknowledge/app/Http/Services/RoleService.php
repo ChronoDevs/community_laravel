@@ -2,15 +2,15 @@
 
 namespace App\Http\Services;
 
-use Illuminate\Support\Facades\Auth;
 use App\Enums\UserRole;
+use Illuminate\Support\Facades\Auth;
 
 class RoleService
 {
     /**
      * Returns true if admin
      *
-     * @return boolean
+     * @return bool
      */
     public static function isAdmin()
     {
@@ -20,7 +20,7 @@ class RoleService
     /**
      * Returns true if admin
      *
-     * @return boolean
+     * @return bool
      */
     public static function isUser()
     {

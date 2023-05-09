@@ -3,8 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Password;
-use Illuminate\Validation\Rules\File;//file validation for future usage
+use Illuminate\Validation\Rules\File;
+use Illuminate\Validation\Rules\Password; //file validation for future usage
 
 class UserRequest extends FormRequest
 {
@@ -37,16 +37,16 @@ class UserRequest extends FormRequest
             'zip_code' => ['bail', 'required', 'string', 'max:8'],
             'address' => ['bail', 'required', 'string', 'max:100'],
             'email' => ['bail', 'required', 'email', 'email', 'max:100'],
-            'password' => ['required',Password::min(8)
+            'password' => ['required', Password::min(8)
                 ->letters()
                 ->mixedCase()
                 ->numbers()
                 ->symbols()
-                ->uncompromised(),'confirmed'],
+                ->uncompromised(), 'confirmed'],
             'password_confirmation' => ['bail', 'required'],
-            /**
-             * Reserved for future use
-             */
+        /**
+         * Reserved for future use
+         */
             // 'job_title' => ['bail', 'required', 'string'],
             // 'profile' => ['bail', 'nullable', File::image()
             //     ->min(5)

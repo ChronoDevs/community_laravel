@@ -2,27 +2,31 @@
 
 namespace App\Http\Services;
 
-use App\Models\PostFavorite;
-use App\Models\Notification;
-use App\Models\Post;
-use Illuminate\Support\Facades\DB;
-use App\Http\Interfaces\PostFavoriteInterface;
 use App\Components\ResponseComponent;
+use App\Http\{
+    Interfaces\PostFavoriteInterface,
+    Repositories\NotificationRepository
+};
+use App\Models\{Notification, Post, PostFavorite};
+use Illuminate\Support\Facades\DB;
 use Throwable;
 
 class PostFavoriteService implements PostFavoriteInterface
 {
     private $response;
+
     private $postFavorite;
-    private $notification;
+
     private $post;
 
-    public function __construct(ResponseComponent $response)
+    private $notifRepository;
+
+    public function __construct(ResponseComponent $response, NotificationRepository $notifRepository)
     {
         $this->response = $response;
         $this->postFavorite = app(PostFavorite::class);
-        $this->notification = app(Notification::class);
         $this->post = app(Post::class);
+        $this->notifRepository = $notifRepository;
     }
 
     public function index()
@@ -58,21 +62,22 @@ class PostFavoriteService implements PostFavoriteInterface
         try {
             $postFavorite = PostFavorite::create([
                 'user_id' => $request['user_id'],
-                'post_id' => $request['post_id']
+                'post_id' => $request['post_id'],
             ]);
 
             if ($postFavorite) {
                 $data = [
-                    'user_id' => $postFavorite->user_id,
-                    'receiver_id' => $postFavorite->post->user_id,
-                    'post_id' => $postFavorite->post_id,
-                    'notification_type' => 'favorited'
+                    'user_id' => $postFavorite->user,
+                    'receiver_id' => $postFavorite->post->user,
+                    'post_id' => $postFavorite->post,
+                    'notification_type' => 'favorited',
                 ];
 
-                $this->notification->createNotif($data);
+                $this->notifRepository->createNotif($data);
             }
 
             DB::commit();
+
             return $this->response->succeed('favorite', 'create');
         } catch (Throwable $e) {
             DB::rollBack();
@@ -84,9 +89,8 @@ class PostFavoriteService implements PostFavoriteInterface
     /**
      * Function to delete or unlike a post
      *
-     * @param int $post_id
-     * @param int $user_id
-     *
+     * @param  int  $post_id
+     * @param  int  $user_id
      * @return array|mixed
      */
     public function destroy($postId, $userId)

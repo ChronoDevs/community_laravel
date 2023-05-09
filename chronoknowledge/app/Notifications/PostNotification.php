@@ -1,25 +1,25 @@
 <?php
+
 namespace App\Notifications;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
-use Illuminate\Notifications\Messages\SlackMessage;
-use App\Models\User;
 use App\Models\Post;
+use App\Models\User;
+use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Messages\SlackMessage;
+use Illuminate\Notifications\Notification;
 
 class PostNotification extends Notification
 {
     use Queueable;
 
     private $user;
+
     private $post;
+
     /**
      * Create a new notification instance.
      *
-     * @param \App\Models\User $user
-     * @param \App\Models\Post $post
      *
      * @return void
      */
@@ -49,9 +49,9 @@ class PostNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+            ->line('The introduction to the notification.')
+            ->action('Notification Action', url('/'))
+            ->line('Thank you for using our application!');
     }
 
     /**
@@ -77,6 +77,6 @@ class PostNotification extends Notification
     {
 
         return (new SlackMessage)
-            ->content($this->user->name . ' created a new post, you can view it here:' . route('posts.show', $this->post->id));
+            ->content($this->user->name.' created a new post, you can view it here:'.route('posts.show', $this->post->id));
     }
 }

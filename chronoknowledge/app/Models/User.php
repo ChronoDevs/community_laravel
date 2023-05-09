@@ -3,20 +3,19 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-// use Illuminate\Contracts\Auth\CanResetPassword;
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use App\Enums\UserRole;
 use App\Enums\UserGender;
 use App\Enums\UserJobTitle;
-use Throwable;
+use App\Enums\UserRole;
+// use Illuminate\Contracts\Auth\CanResetPassword;
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
+use Laravel\Sanctum\HasApiTokens;
+use Throwable;
 
 class User extends Authenticatable
 {
@@ -43,7 +42,7 @@ class User extends Authenticatable
         'address',
         'tel',
         'profile',
-        'job_title'
+        'job_title',
     ];
 
     /**
@@ -82,7 +81,7 @@ class User extends Authenticatable
                 'zip_code' => $data['zip_code'],
                 'address' => $data['address'],
                 'job_title' => UserJobTitle::TITLES[1],
-                'tel' => $data['contact_number']
+                'tel' => $data['contact_number'],
             ]);
 
             return $user;
@@ -97,7 +96,7 @@ class User extends Authenticatable
             $user = $this->create([
                 'role_id' => UserRole::USER,
                 'email' => $data->email,
-                'username' => strtolower(explode($data->name, ' ')[0]) . '123',
+                'username' => strtolower(explode($data->name, ' ')[0]).'123',
                 'password' => Hash::make('password'),
                 'name' => $data->name,
                 'nick_name' => $data->nick_name,
@@ -122,14 +121,14 @@ class User extends Authenticatable
      */
     public function setName($firstName, $middleName, $lastName)
     {
-        return $firstName . ' ' . $middleName . ' ' . $lastName;
+        return $firstName.' '.$middleName.' '.$lastName;
     }
 
     public function formatDate($date)
     {
         $date = explode('-', $date);
 
-        return $date[2] . '-' . $date[1] . '-' . $date[0];
+        return $date[2].'-'.$date[1].'-'.$date[0];
     }
 
     /**

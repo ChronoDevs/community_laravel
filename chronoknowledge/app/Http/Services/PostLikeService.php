@@ -1,33 +1,36 @@
 <?php
+
 namespace App\Http\Services;
 
-use App\Models\{PostLike, Notification};
-use Illuminate\Support\Facades\{DB, Log, Cache};
 use App\Components\ResponseComponent;
 use App\Http\Repositories\NotificationRepository;
+use App\Models\{Notification, PostLike};
 use Illuminate\Contracts\Cache\LockTimeoutException;
+use Illuminate\Support\Facades\{Cache, DB, Log};
 use Throwable;
 
 class PostLikeService
 {
     private $response;
+
     private $postLike;
-    private $notification;
+
     private $notifRepository;
 
-    public function __construct(ResponseComponent $response, NotificationRepository $nofifRepository)
+    public function __construct(ResponseComponent $response, NotificationRepository $notifRepository)
     {
         $this->response = $response;
         $this->postLike = app(PostLike::class);
-        $this->notification = app(Notification::class);
-        $this->notifRepository = $nofifRepository;
+        $this->notifRepository = $notifRepository;
     }
 
-    public function index() {
+    public function index()
+    {
         return $this->postLike->postLikesList();
     }
 
-    public function getLikesByYear() {
+    public function getLikesByYear()
+    {
         return $this->postLike->likesByYearList();
     }
 
@@ -56,7 +59,7 @@ class PostLikeService
                     'user_id' => $postLike->user,
                     'receiver_id' => $postLike->post->user,
                     'post_id' => $postLike->post,
-                    'notification_type' => 'liked'
+                    'notification_type' => 'liked',
                 ];
 
                 $this->notifRepository->createNotif($data);
@@ -75,9 +78,8 @@ class PostLikeService
     /**
      * Function to delete or unlike a post
      *
-     * @param int $post_id
-     * @param int $user_id
-     *
+     * @param  int  $post_id
+     * @param  int  $user_id
      * @return array|mixed
      */
     public function destroy($post_id, $user_id)

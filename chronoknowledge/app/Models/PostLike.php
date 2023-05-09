@@ -4,8 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Post;
-use App\Models\User;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 
@@ -21,7 +19,7 @@ class PostLike extends Model
      */
     protected $fillable = [
         'user_id',
-        'post_id'
+        'post_id',
     ];
 
     /**
@@ -64,11 +62,10 @@ class PostLike extends Model
         return $query;
     }
 
-     /**
+    /**
      * List all likes by year
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
-     *
      * @return void
      */
     public function scopeLikesByYearList($query, $year)

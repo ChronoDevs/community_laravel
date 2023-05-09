@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
-use Laravel\Socialite\Facades\Socialite;
-use App\Models\LinkedSocialAccount;
 use App\Models\User;
 
 class UserController extends Controller
@@ -17,7 +14,7 @@ class UserController extends Controller
         $this->user = app(User::class);
     }
 
-    public function index ()
+    public function index()
     {
         return view('auth.register');
     }
@@ -25,11 +22,10 @@ class UserController extends Controller
     /**
      * Registers a new user
      *
-     * @param App\Http\Requests\UserRequest $request
-     *
+     * @param  App\Http\Requests\UserRequest  $request
      * @return mixed
      */
-    public function register (UserRequest $request)
+    public function register(UserRequest $request)
     {
         $data = $request->validated();
         $register = $this->user->registerUser($data);

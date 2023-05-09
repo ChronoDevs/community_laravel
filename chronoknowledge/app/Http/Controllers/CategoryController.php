@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Services\CategoryService;
-use App\Http\Requests\CategoryRequest;
 use App\Components\ResponseComponent;
+use App\Http\Requests\CategoryRequest;
+use App\Http\Services\CategoryService;
 use App\Models\Category;
 use App\Models\Notification;
 
 class CategoryController extends Controller
 {
     private $categoryService;
+
     private $response;
+
     private $notification;
 
     public function __construct(CategoryService $categoryService, ResponseComponent $response)
@@ -46,7 +47,7 @@ class CategoryController extends Controller
     /**
      * Returns modification of categorys page
      *
-     * @param App\Models\Category $category
+     * @param  App\Models\Category  $category
      */
     public function edit(Category $category)
     {
@@ -58,7 +59,7 @@ class CategoryController extends Controller
     /**
      * Store a new category data
      *
-     * @param App\Http\Requests\CategoryRequest $request
+     * @param  App\Http\Requests\CategoryRequest  $request
      */
     public function store(CategoryRequest $request)
     {
@@ -72,8 +73,8 @@ class CategoryController extends Controller
     /**
      * Update a category data
      *
-     * @param App\Http\Requests\CategoryRequest $request
-     * @param App\Models\Category $category
+     * @param  App\Http\Requests\CategoryRequest  $request
+     * @param  App\Models\Category  $category
      */
     public function update(CategoryRequest $request, category $category)
     {
@@ -87,7 +88,7 @@ class CategoryController extends Controller
     /**
      * Delete a category data
      *
-     * @param App\Http\Requests\Category $category
+     * @param  App\Http\Requests\Category  $category
      */
     public function destroy(Category $category)
     {

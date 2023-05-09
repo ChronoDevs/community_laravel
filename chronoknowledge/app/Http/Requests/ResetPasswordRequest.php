@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
-use Illuminate\Validation\Rules\File;
 
 class ResetPasswordRequest extends FormRequest
 {
@@ -28,13 +27,13 @@ class ResetPasswordRequest extends FormRequest
         return [
             'token' => ['bail', 'required'],
             'email' => ['bail', 'required', 'email'],
-            'password' => ['required',Password::min(8)
-            ->letters()
-            ->mixedCase()
-            ->numbers()
-            ->symbols()
-            ->uncompromised(),'confirmed'],
-            'password_confirmation' => ['bail', 'required']
+            'password' => ['required', Password::min(8)
+                ->letters()
+                ->mixedCase()
+                ->numbers()
+                ->symbols()
+                ->uncompromised(), 'confirmed'],
+            'password_confirmation' => ['bail', 'required'],
         ];
     }
 }

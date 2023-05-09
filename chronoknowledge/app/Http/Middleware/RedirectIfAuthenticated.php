@@ -2,18 +2,17 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Services\RoleService;
 use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Services\RoleService;
 
 class RedirectIfAuthenticated
 {
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @param  string|null  ...$guards
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
@@ -27,6 +26,7 @@ class RedirectIfAuthenticated
                 if (RoleService::isAdmin()) {
                     return redirect(RouteServiceProvider::ADMIN_HOME);
                 }
+
                 return redirect(RouteServiceProvider::HOME);
             }
         }

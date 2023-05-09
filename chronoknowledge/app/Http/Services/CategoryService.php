@@ -2,15 +2,16 @@
 
 namespace App\Http\Services;
 
-use App\Models\Category;
-use App\Http\Interfaces\CategoryInterface;
 use App\Components\ResponseComponent;
+use App\Http\Interfaces\CategoryInterface;
+use App\Models\Category;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 
 class CategoryService implements CategoryInterface
 {
     private $category;
+
     private $response;
 
     public function __construct(ResponseComponent $response)
@@ -31,7 +32,7 @@ class CategoryService implements CategoryInterface
         try {
             DB::transaction(function () use ($request) {
                 $this->category->create([
-                    ...$request
+                    ...$request,
                 ]);
             });
 
@@ -46,7 +47,7 @@ class CategoryService implements CategoryInterface
         try {
             DB::transaction(function () use ($request, &$category) {
                 $category->update([
-                    ...$request
+                    ...$request,
                 ]);
             });
 

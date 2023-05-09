@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Providers;
 
 use Illuminate\Cache\RateLimiting\Limit;
@@ -26,7 +27,6 @@ class RouteServiceProvider extends ServiceProvider
      * @var string
      */
     public const ADMIN_HOME = '/admin';
-
 
     /**
      * Define your route model bindings, pattern filters, and other route configuration.

@@ -24,7 +24,7 @@ class SendResetLinkRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => ['bail', 'required', 'email']
+            'email' => ['bail', 'required', 'email'],
         ];
     }
 }

@@ -2,18 +2,11 @@
 
 namespace App\Models;
 
+use App\Enums\PostStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\User;
-use App\Models\PostLike;
-use App\Models\PostComment;
-use App\Models\PostFavorite;
-use App\Models\PostTag;
-use App\Models\Category;
-use App\Enums\PostStatus;
-use Carbon\Carbon;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 
 class Post extends Model
@@ -33,14 +26,13 @@ class Post extends Model
         'title',
         'plain_description',
         'html_description',
-        'status'
+        'status',
     ];
 
     /**
      * Route notifications for the Slack channel.
      *
      * @param  \Illuminate\Notifications\Notification  $notification
-     *
      * @return string
      */
     public function routeNotificationForSlack($notification)
@@ -93,7 +85,7 @@ class Post extends Model
         return $this->hasMany(PostTag::class);
     }
 
-       /** Get the favorites for a post
+    /** Get the favorites for a post
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
@@ -113,7 +105,7 @@ class Post extends Model
         return $query->latest();
     }
 
-     /**
+    /**
      * Scope function to get relationships for a post
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
@@ -121,11 +113,12 @@ class Post extends Model
      */
     public function scopeRelationship($query)
     {
-        return $query->with(['user','likes', 'comments', 'favorites', 'tags']);
+        return $query->with(['user', 'likes', 'comments', 'favorites', 'tags']);
     }
 
     /**
      * List all posts
+     *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return void
      */
@@ -199,22 +192,20 @@ class Post extends Model
     /**
      * Filters post by title
      *
-     * @param string $keyword
-     *
+     * @param  string  $keyword
      * @return Illuminate\Database\Eloquent\Builder $query
      */
     public function scopePostFilterByTitle($query, $keyword)
     {
-        return $query->where('posts.title', 'LIKE', '%' . $keyword . '%')
+        return $query->where('posts.title', 'LIKE', '%'.$keyword.'%')
             ->orderBy('posts.id', 'desc');
     }
 
-     /**
+    /**
      * Filters post by category
      *
-     * @param Illuminate\Database\Eloquent\Builder $query
-     * @param string $keyword
-     *
+     * @param  Illuminate\Database\Eloquent\Builder  $query
+     * @param  string  $keyword
      * @return void
      */
     public function scopePostFilterByCategory($query, $keyword)
@@ -234,9 +225,8 @@ class Post extends Model
     /**
      * Filters post by tag
      *
-     * @param Illuminate\Database\Eloquent\Builder $query
-     * @param string $keyword
-     *
+     * @param  Illuminate\Database\Eloquent\Builder  $query
+     * @param  string  $keyword
      * @return void
      */
     public function scopePostFilterByTag($query, $keyword)
@@ -245,15 +235,14 @@ class Post extends Model
             $join->on('posts.id', '=', 't.post_id');
         })
             ->where('t.description', $keyword);
-            // ->orderBy('posts.id', 'desc');
+        // ->orderBy('posts.id', 'desc');
     }
 
     /**
      * Filters post by relevance
      *
-     * @param Illuminate\Database\Eloquent\Builder $query
-     * @param string $keyword
-     *
+     * @param  Illuminate\Database\Eloquent\Builder  $query
+     * @param  string  $keyword
      * @return void
      */
     public function scopeRelevantPost($query)
@@ -268,9 +257,8 @@ class Post extends Model
     /**
      * Filters post by top
      *
-     * @param Illuminate\Database\Eloquent\Builder $query
-     * @param string $keyword
-     *
+     * @param  Illuminate\Database\Eloquent\Builder  $query
+     * @param  string  $keyword
      * @return void
      */
     public function scopeTopPost($query)
@@ -281,8 +269,9 @@ class Post extends Model
             ->orderBy('favorites_count', 'desc');
     }
 
-     /**
+    /**
      * List all latest posts
+     *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return void
      */
@@ -291,8 +280,9 @@ class Post extends Model
         return $query->latest();
     }
 
-     /**
+    /**
      * List all favorited posts
+     *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return void
      */
@@ -307,6 +297,7 @@ class Post extends Model
 
     /**
      * Paginate listed posts
+     *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return void
      */

@@ -2,26 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Services\PostFavoriteService;
 use App\Http\Requests\PostFavoriteRequest;
+use App\Http\Services\PostFavoriteService;
 use App\Models\Notification;
+use Illuminate\Http\Request;
 
 class PostFavoriteController extends Controller
 {
     /**
      * Global value for PostFavoriteService and CategoryService
-     *
      */
     private $postFavoriteService;
+
     private $categoryService;
+
     private $notification;
+
     private $postService;
 
     /**
      * Initialize the PostFavoriteService via constructor
      *
-     * @param App\Http\Services\PostFavoriteService $postFavoriteService
+     * @param  App\Http\Services\PostFavoriteService  $postFavoriteService
      */
     public function __construct(PostFavoriteService $postFavoriteService)
     {
@@ -32,7 +34,7 @@ class PostFavoriteController extends Controller
     /**
      * List all favorited posts
      *
-     * @param Illuminate\Http\Request $request
+     * @param  Illuminate\Http\Request  $request
      */
     public function index(Request $request)
     {
@@ -60,7 +62,6 @@ class PostFavoriteController extends Controller
     /**
      * Delete a post favorite
      *
-     * @param \Illuminate\Http\Request $request
      *
      * @return mixed|string
      */

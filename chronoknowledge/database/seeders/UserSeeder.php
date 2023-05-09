@@ -2,13 +2,12 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Enums\UserGender;
+use App\Enums\UserRole;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
-use App\Enums\UserRole;
-use App\Enums\UserGender;
+use Illuminate\Support\Str;
 
 class UserSeeder extends Seeder
 {
@@ -33,7 +32,7 @@ class UserSeeder extends Seeder
                 'zip_code' => Str::random(8),
                 'address' => Str::random(100),
                 'tel' => Str::random(11),
-                'job_title' => 'Software Engineer'
+                'job_title' => 'Software Engineer',
             ],
             [
                 'id' => 2,
@@ -48,8 +47,8 @@ class UserSeeder extends Seeder
                 'zip_code' => Str::random(8),
                 'address' => Str::random(100),
                 'tel' => Str::random(11),
-                'job_title' => 'Software Engineer'
-            ]
+                'job_title' => 'Software Engineer',
+            ],
         ]);
     }
 }

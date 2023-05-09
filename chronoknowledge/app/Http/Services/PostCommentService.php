@@ -2,24 +2,22 @@
 
 namespace App\Http\Services;
 
-use App\Models\PostComment;
-use Illuminate\Support\Facades\DB;
 use App\Components\ResponseComponent;
+use App\Http\Repositories\NotificationRepository;
+use App\Models\{Notification, PostComment, User};
 use App\Notifications\PostCommentNotification;
-use App\Models\User;
-use App\Models\Notification;
+use Throwable;
 
 class PostCommentService
 {
     private $response;
-    private $postComment;
-    private $notification;
 
-    public function __construct(ResponseComponent $response)
+    private $notifRepository;
+
+    public function __construct(ResponseComponent $response, NotificationRepository $notifRepository)
     {
         $this->response = $response;
-        $this->postComment = app(PostComment::class);
-        $this->notification = app(Notification::class);
+        $this->notifRepository = $notifRepository;
     }
 
     public function index()
@@ -37,21 +35,21 @@ class PostCommentService
             $postComment = PostComment::create([
                 'user_id' => $request['user_id'],
                 'post_id' => $request['post_id'],
-                'description' => $request['description']
+                'description' => $request['description'],
             ]);
 
             if ($postComment) {
                 $data = [
-                    'user_id' => $postComment->user_id,
-                    'receiver_id' => $postComment->post->user_id,
-                    'post_id' => $postComment->post_id,
-                    'notification_type' => 'commented'
+                    'user_id' => $postComment->user,
+                    'receiver_id' => $postComment->post->user,
+                    'post_id' => $postComment->post,
+                    'notification_type' => 'commented',
                 ];
 
-                $this->notification->createNotif($data);
+                $this->notifRepository->createNotif($data);
             }
 
-            $notif = $user->notify(new PostCommentNotification($user, $postComment->post));
+            $user->notify(new PostCommentNotification($user, $postComment->post));
 
             return $this->response->succeed('comment', 'create');
         } catch (Throwable $e) {
@@ -63,7 +61,7 @@ class PostCommentService
     {
         try {
             $postComment->update([
-                'description' => $request['description']
+                'description' => $request['description'],
             ]);
 
             return $this->response->succeed('comment', 'edit');

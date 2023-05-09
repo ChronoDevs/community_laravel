@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Auth\Traits;
 
-use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite;
 
-trait FacebookLogin {
+trait FacebookLogin
+{
     /**
      * redirect link
      */
@@ -26,9 +27,9 @@ trait FacebookLogin {
             $facebookUser = Socialite::driver('facebook')->stateless()->user();
             $user = User::where('email', $facebookUser->email)->first();
 
-            if (!$user) {
+            if (! $user) {
                 if ($method == 'register') {
-                  $user = $this->user->registerUserViaGoogle($facebookUser);
+                    $user = $this->user->registerUserViaGoogle($facebookUser);
 
                     if ($user) {
                         return redirect()->route('login.index')->with('success', trans('messages.register.success'));

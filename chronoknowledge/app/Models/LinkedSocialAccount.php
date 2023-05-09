@@ -20,14 +20,14 @@ class LinkedSocialAccount extends Model
         'user_id',
         'email',
         'provider_name',
-        'provider_id'
+        'provider_id',
     ];
 
     /**
      * Store or update new linked social account
      *
-     * @param App\Models\User $user
-     * @param mixed $googleUser
+     * @param  App\Models\User  $user
+     * @param  mixed  $googleUser
      */
     public function store($user, $googleUser)
     {
